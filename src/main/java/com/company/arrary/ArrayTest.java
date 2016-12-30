@@ -16,7 +16,7 @@ public class ArrayTest {
 //        board.remove(2);
 //        board.remove(0);
 
-        char[] chars = new char[] {'f', 'b', 'c', 'a', 'd', 'e'};
+        char[] chars = new char[] {'f', 'b', 'c', 'a', 'd', 'a', 'e'};
         insertionSort(chars);
         System.out.println(Arrays.toString(chars));
     }
@@ -26,12 +26,12 @@ public class ArrayTest {
         }
         for (int x = 1; x < chars.length; x++) {
             int y = x;
-            while (y > 0 && chars[y] < chars[y - 1]) {
-                char temp = chars[y - 1];
-                chars[y - 1] = chars[y];
-                chars[y] = temp;
+            char cur = chars[y];
+            while (y > 0 && cur < chars[y - 1]) {
+                chars[y] = chars[y - 1];
                 y--;
             }
+            chars[y] = cur;
         }
     }
 }
