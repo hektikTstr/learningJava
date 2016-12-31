@@ -1,6 +1,9 @@
 package com.company.arrary;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class ArrayTest {
     public static void main(String[] args) {
@@ -16,9 +19,23 @@ public class ArrayTest {
 //        board.remove(2);
 //        board.remove(0);
 
-        char[] chars = new char[] {'f', 'b', 'c', 'a', 'd', 'a', 'e'};
-        insertionSort(chars);
-        System.out.println(Arrays.toString(chars));
+//        char[] chars = new char[] {'f', 'b', 'c', 'a', 'd', 'a', 'e'};
+//        insertionSort(chars);
+//        System.out.println(Arrays.toString(chars));
+
+//        Integer[] data = new Integer[10];
+//        Random rand = new Random(System.currentTimeMillis());
+//        for (int i = 0; i < data.length; i++) {
+//            data[i] = rand.nextInt(100);
+//        }
+//        Integer[] orig = ArrayUtils.clone(data);
+//        System.out.println("arrays equal before sort: " + ArrayUtils.isEquals(data, orig));
+//        Arrays.sort(data, Collections.reverseOrder());
+//        System.out.println("arrays equal before sort: " + ArrayUtils.isEquals(data, orig));
+//        System.out.println("orig: " + ArrayUtils.toString(orig));
+//        System.out.println("data: " + ArrayUtils.toString(data));
+
+        char a = 'A' + 2;
     }
     private static void insertionSort(char[] chars) {
         if (chars.length <= 1) {
