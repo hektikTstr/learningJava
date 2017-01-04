@@ -2,8 +2,8 @@ package com.company.linkList;
 
 public class DoublyLinkedList<T> {
     public int size = 0;
-    public Node<T> head = null;
-    public Node<T> tail = null;
+    public Node<T> header = null;
+    public Node<T> trailer = null;
     public class Node<T> {
         public Node<T> next = null;
         public Node<T> prev = null;
@@ -13,6 +13,11 @@ public class DoublyLinkedList<T> {
             this.prev = prev;
             this.element = element;
         }
+    }
+    public DoublyLinkedList() {
+        header = new Node(null, null, null);
+        trailer = new Node(null, header, null);
+        header.next = trailer;
     }
     public int size() {
         return size;
@@ -24,70 +29,53 @@ public class DoublyLinkedList<T> {
         if (isEmpty()) {
             return null;
         }
-        return head.element;
+        return header.next.element;
     }
     public T last() {
         if (isEmpty()) {
             return null;
         }
-        return tail.element;
+        return trailer.prev.element;
     }
-    public void addFirst(T element) {
-        Node<T> node = new Node(null, null, element);
-        if (isEmpty()) {
-            tail = node;
-            node.next = null;
-            node.prev = null;
-        } else {
-            node.next = head;
-            node.prev = null;
-            head.prev = node;
-        }
-        head = node;
-        node.element = element;
+    private void addBetween(Node successor, Node predecessor, T element) {
+        Node<T> node = new Node(successor, predecessor, element);
+        successor.prev = node;
+        predecessor.next = node;
         size++;
+    }
+
+    public void addFirst(T element) {
+        addBetween(header.next, header, element);
     }
     public void addLast(T element) {
-        Node<T> node = new Node(null, null, element);
-        if (isEmpty()) {
-            head = node;
-            node.next = null;
-            node.prev = null;
-        } else {
-            node.next = null;
-            node.prev = tail;
-            tail.next = node;
-        }
-        tail = node;
-        node.element = element;
-        size++;
+        addBetween(trailer, trailer.prev, element);
+    }
+    private void removeBetween(Node successor, Node predecessor) {
+        successor.prev = predecessor;
+        predecessor.next = successor;
+        size--;
+    }
+    private void remove(Node<T> node) {
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+        size--;
     }
     public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        T element = head.element;
-        head = head.next;
-        if (head != null) {
-            head.prev = null;
-        } else {
-            tail = null;
-        }
-        size--;
+        T element = header.next.element;
+        remove(header.next);
+        //removeBetween(header.next.next, header);
         return element;
     }
     public T removeLast() {
         if (isEmpty()) {
             return null;
         }
-        T element = tail.element;
-        tail = tail.prev;
-        if (tail != null) {
-            tail.next = null;
-        } else {
-            head = null;
-        }
-        size--;
+        T element = trailer.prev.element;
+        remove(trailer.prev);
+        //removeBetween(trailer, trailer.prev.prev);
         return element;
     }
 
@@ -105,6 +93,7 @@ public class DoublyLinkedList<T> {
         System.out.println(list.removeLast());
         System.out.println(list.removeFirst());
         System.out.println(list.removeFirst());
+        System.out.println(list.removeLast());
         System.out.println(list.removeLast());
     }
 }
