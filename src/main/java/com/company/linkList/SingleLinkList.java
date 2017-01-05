@@ -70,26 +70,50 @@ public class SingleLinkList<T> {
         }
     }
 
+    public boolean equals(Object o) {
+        if (o == null || size() != ((SingleLinkList)o).size() || getClass() != o.getClass()) {
+            return false;
+        }
+        Node n1 = head;
+        Node n2 = ((SingleLinkList)o).head;
+        while (n1 != null) {
+            if (!n1.getValue().equals(n2.getValue())) {
+                return false;
+            }
+            n1 = n1.getNext();
+            n2 = n2.getNext();
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         SingleLinkList<String> stringSingleLinkList = new SingleLinkList<String>();
+        SingleLinkList<String> stringSingleLinkList2 = new SingleLinkList<String>();
         stringSingleLinkList.addFirst("xiao");
         stringSingleLinkList.addLast("yang");
         stringSingleLinkList.addFirst("zhang");
         stringSingleLinkList.addLast("is");
         stringSingleLinkList.addLast("good");
         stringSingleLinkList.addFirst("mr. ");
-        System.out.println("first() = " + stringSingleLinkList.first().getValue());
-        System.out.println("last() = " + stringSingleLinkList.last().getValue());
-        stringSingleLinkList.removeFirst();
-        System.out.println("first() = " + stringSingleLinkList.first().getValue());
-        stringSingleLinkList.removeFirst();
-        System.out.println("first() = " + stringSingleLinkList.first().getValue());
-        stringSingleLinkList.removeFirst();
-        stringSingleLinkList.removeFirst();
-        stringSingleLinkList.removeFirst();
-        System.out.println("first() = " + stringSingleLinkList.first().getValue());
-        System.out.println("last() = " + stringSingleLinkList.last().getValue());
-        stringSingleLinkList.removeFirst();
+        stringSingleLinkList2.addFirst("xiao");
+        stringSingleLinkList2.addLast("yang");
+        stringSingleLinkList2.addFirst("zhang");
+        stringSingleLinkList2.addLast("is");
+        stringSingleLinkList2.addLast("good");
+        stringSingleLinkList2.addFirst("mrs. ");
+        System.out.println(stringSingleLinkList.equals(stringSingleLinkList2));
+//        System.out.println("first() = " + stringSingleLinkList.first().getValue());
+//        System.out.println("last() = " + stringSingleLinkList.last().getValue());
+//        stringSingleLinkList.removeFirst();
+//        System.out.println("first() = " + stringSingleLinkList.first().getValue());
+//        stringSingleLinkList.removeFirst();
+//        System.out.println("first() = " + stringSingleLinkList.first().getValue());
+//        stringSingleLinkList.removeFirst();
+//        stringSingleLinkList.removeFirst();
+//        stringSingleLinkList.removeFirst();
+//        System.out.println("first() = " + stringSingleLinkList.first().getValue());
+//        System.out.println("last() = " + stringSingleLinkList.last().getValue());
+//        stringSingleLinkList.removeFirst();
     }
 }
 
