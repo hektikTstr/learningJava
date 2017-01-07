@@ -1,8 +1,8 @@
 package com.company.linkList;
 
-public class SingleLinkList<T> {
-    private Node head = null;
-    private Node tail = null;
+public class SingleLinkList<T> implements Cloneable {
+    private Node<T> head = null;
+    private Node<T> tail = null;
     private int size = 0;
 
     public boolean isEmpty() {
@@ -23,11 +23,12 @@ public class SingleLinkList<T> {
 
     public void addLast(T value) {
         Node newNode = new Node(value, null);
-        this.tail.setNext(newNode);
-        this.tail = newNode;
         if (isEmpty()) {
-            head = tail;
+            head = newNode;
+        } else {
+            this.tail.setNext(newNode);
         }
+        this.tail = newNode;
         size++;
     }
 
@@ -86,6 +87,17 @@ public class SingleLinkList<T> {
         return true;
     }
 
+    public SingleLinkList<T> clone() {
+        SingleLinkList<T> newList = new SingleLinkList<T>();
+        Node<T> temp = this.head;
+        for (int i = 0; i < size(); i++) {
+            newList.addLast(temp.getValue());
+            temp = temp.getNext();
+        }
+        newList.size = size();
+        return newList;
+    }
+
     public static void main(String[] args) {
         SingleLinkList<String> stringSingleLinkList = new SingleLinkList<String>();
         SingleLinkList<String> stringSingleLinkList2 = new SingleLinkList<String>();
@@ -102,6 +114,7 @@ public class SingleLinkList<T> {
         stringSingleLinkList2.addLast("good");
         stringSingleLinkList2.addFirst("mrs. ");
         System.out.println(stringSingleLinkList.equals(stringSingleLinkList2));
+        SingleLinkList<String> stringSingleLinkList3 = stringSingleLinkList.clone();
 //        System.out.println("first() = " + stringSingleLinkList.first().getValue());
 //        System.out.println("last() = " + stringSingleLinkList.last().getValue());
 //        stringSingleLinkList.removeFirst();

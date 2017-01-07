@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 import org.apache.commons.lang3.ArrayUtils;
 
-public class ArrayTest {
+public class ArrayTest<T> {
     public static void main(String[] args) {
 //        Scoreboard board = new Scoreboard(4);
 //        board.add(new GameEntry("shawn", 98));
@@ -36,7 +36,18 @@ public class ArrayTest {
 //        System.out.println("data: " + ArrayUtils.toString(data));
 
         char a = 'A' + 2;
+        int[][] b = new int[3][];
+        b[1] = new int[]{1, 2, 3};
+        b[2] = new int[]{4, 5, 6};
+        b[0] = new int[]{7, 8};
+
+        int[][] c = b.clone();
+        int[][] f = deepClone(b);
+        String[] d = {"ab", "12"};
+        String[] e = new String[3];
+        e = d.clone();
     }
+
     private static void insertionSort(char[] chars) {
         if (chars.length <= 1) {
             return;
@@ -50,5 +61,13 @@ public class ArrayTest {
             }
             chars[y] = cur;
         }
+    }
+
+    public static int[][] deepClone(int[][] original) {
+        int[][] backup = new int[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            backup[i] = original[i].clone();
+        }
+        return backup;
     }
 }
