@@ -87,18 +87,32 @@ public class SingleLinkList<T> implements Cloneable {
         return true;
     }
 
-    public SingleLinkList<T> clone() {
-        SingleLinkList<T> newList = new SingleLinkList<T>();
-        Node<T> temp = this.head;
-        for (int i = 0; i < size(); i++) {
-            newList.addLast(temp.getValue());
-            temp = temp.getNext();
+    public SingleLinkList<T> clone() throws CloneNotSupportedException {
+        SingleLinkList<T> newList = (SingleLinkList<T>) super.clone();
+        if (!isEmpty()) {
+            Node<T> node = new Node<T>(head.getValue(), null);
+            newList.head = node;
+            Node<T> walker = head.getNext();
+            Node<T> cur = node;
+            while (walker != null) {
+                node = new Node<T>(walker.getValue(), null);
+                cur.setNext(node);
+                cur = node;
+                walker = walker.getNext();
+            }
+            newList.tail = cur;
         }
-        newList.size = size();
+//
+//        Node<T> temp = this.head;
+//        for (int i = 0; i < size(); i++) {
+//            newList.addLast(temp.getValue());
+//            temp = temp.getNext();
+//        }
+//        newList.size = size();
         return newList;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         SingleLinkList<String> stringSingleLinkList = new SingleLinkList<String>();
         SingleLinkList<String> stringSingleLinkList2 = new SingleLinkList<String>();
         stringSingleLinkList.addFirst("xiao");
