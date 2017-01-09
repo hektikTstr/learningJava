@@ -1,4 +1,4 @@
-package com.company.linkList;
+package com.company.fundamental.linkList;
 
 public class CircularlyLinkedList<T> {
     public class Node<T> {

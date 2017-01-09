@@ -1,4 +1,4 @@
-package com.company.arrary;
+package com.company.fundamental.arrary;
 
 public class ArrayClone {
     public class Person implements Cloneable {

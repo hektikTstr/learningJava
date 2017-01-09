@@ -1,4 +1,4 @@
-package com.company.arrary;
+package com.company.fundamental.arrary;
 
 public class GameEntry {
     private String name;

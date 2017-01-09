@@ -1,9 +1,4 @@
-package com.company.arrary;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
-import org.apache.commons.lang3.ArrayUtils;
+package com.company.fundamental.arrary;
 
 public class ArrayTest<T> {
     public static void main(String[] args) {

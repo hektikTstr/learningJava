@@ -1,4 +1,4 @@
-package com.company.linkList;
+package com.company.fundamental.linkList;
 
 public class SingleLinkList<T> implements Cloneable {
     private Node<T> head = null;
@@ -32,23 +32,42 @@ public class SingleLinkList<T> implements Cloneable {
         size++;
     }
 
-    public Node first() {
-        return head;
+    public T first() {
+        if (isEmpty()) {
+            return null;
+        }
+        return head.getValue();
     }
 
-    public Node last() {
-        return tail;
+    public T last() {
+        if (isEmpty()) {
+            return null;
+        }
+        return tail.getValue();
     }
 
-    public void removeFirst() {
+    public T secondToLast() {
+        if (size() < 2) {
+            return null;
+        }
+        Node<T> cur = head;
+        while (cur.getNext().getNext() != null) {
+            cur = cur.getNext();
+        }
+        return cur.getValue();
+    }
+
+    public T removeFirst() {
         if (first() == null) {
             throw new UnsupportedOperationException("The list is empty.");
         }
+        T element = head.getValue();
         head = head.getNext();
         size--;
         if (isEmpty()) {
             tail = null;
         }
+        return element;
     }
 
     private class Node<T> {
@@ -129,6 +148,7 @@ public class SingleLinkList<T> implements Cloneable {
         stringSingleLinkList2.addFirst("mrs. ");
         System.out.println(stringSingleLinkList.equals(stringSingleLinkList2));
         SingleLinkList<String> stringSingleLinkList3 = stringSingleLinkList.clone();
+        stringSingleLinkList.secondToLast();
 //        System.out.println("first() = " + stringSingleLinkList.first().getValue());
 //        System.out.println("last() = " + stringSingleLinkList.last().getValue());
 //        stringSingleLinkList.removeFirst();

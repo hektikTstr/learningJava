@@ -1,4 +1,4 @@
-package com.company.arrary;
+package com.company.fundamental.arrary;
 
 public class TicTacToe {
     public static final int X = 1, O = -1;
@@ -20,6 +20,9 @@ public class TicTacToe {
     }
 
     public void putMark(int i, int j) throws IllegalArgumentException {
+        if (isWin(X) || isWin(O)) {
+            throw new IllegalStateException("Game over");
+        }
         if ((i < 0) || (i > 2) || (j < 0) || (j > 2)) {
             throw new IllegalArgumentException("Invalid board position");
         }

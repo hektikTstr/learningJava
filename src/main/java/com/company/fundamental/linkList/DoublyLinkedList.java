@@ -1,4 +1,4 @@
-package com.company.linkList;
+package com.company.fundamental.linkList;
 
 public class DoublyLinkedList<T> {
     public int size = 0;
