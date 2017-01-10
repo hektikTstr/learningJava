@@ -1,5 +1,7 @@
 package com.company.fundamental.arrary;
 
+import java.util.Arrays;
+
 public class ArrayTest<T> {
     public static void main(String[] args) {
 //        Scoreboard board = new Scoreboard(4);
@@ -41,6 +43,7 @@ public class ArrayTest<T> {
         String[] d = {"ab", "12"};
         String[] e = new String[3];
         e = d.clone();
+
     }
 
     private static void insertionSort(char[] chars) {

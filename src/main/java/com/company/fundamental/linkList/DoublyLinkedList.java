@@ -22,6 +22,16 @@ public class DoublyLinkedList<T> {
     public int size() {
         return size;
     }
+    // R-3.11
+    public int sizeReimplementation() {
+        int counter = 0;
+        Node node = header;
+        while (node.next != trailer) {
+            counter++;
+            node = node.next;
+        }
+        return counter;
+    }
     public boolean isEmpty() {
         return size == 0;
     }
@@ -36,6 +46,29 @@ public class DoublyLinkedList<T> {
             return null;
         }
         return trailer.prev.element;
+    }
+    // R-3.8
+    public T middle() {
+        if (isEmpty()) {
+            return null;
+        }
+        Node<T> forwardWalker = header.next;
+        Node<T> backwardWalker = trailer.prev;
+        // size is odd
+        if (size() % 2 == 1) {
+            while (forwardWalker != backwardWalker) {
+                forwardWalker = forwardWalker.next;
+                backwardWalker = backwardWalker.prev;
+            }
+            return forwardWalker.element;
+        } else {
+            // size is even
+            while (forwardWalker != backwardWalker.prev) {
+                forwardWalker = forwardWalker.next;
+                backwardWalker = backwardWalker.prev;
+            }
+            return forwardWalker.element;
+        }
     }
     private void addBetween(Node successor, Node predecessor, T element) {
         Node<T> node = new Node(successor, predecessor, element);
@@ -85,15 +118,26 @@ public class DoublyLinkedList<T> {
         list.removeFirst();
         list.removeLast();
         list.addFirst("is");
+        System.out.println(list.sizeReimplementation());
+        list.addLast("a");
+        System.out.println(list.sizeReimplementation());
         list.addLast("good");
+        System.out.println(list.sizeReimplementation());
         list.addFirst("shawn");
+        System.out.println(list.sizeReimplementation());
         list.addFirst("mr.");
+        System.out.println(list.sizeReimplementation());
         list.addLast("boy");
+        System.out.println(list.sizeReimplementation());
+        System.out.println(list.middle());
+        System.out.println(list.removeFirst());
+        System.out.println(list.sizeReimplementation());
+        System.out.println(list.removeLast());
+        System.out.println(list.sizeReimplementation());
+        System.out.println(list.removeFirst());
         System.out.println(list.removeFirst());
         System.out.println(list.removeLast());
-        System.out.println(list.removeFirst());
-        System.out.println(list.removeFirst());
         System.out.println(list.removeLast());
-        System.out.println(list.removeLast());
+        System.out.println(list.sizeReimplementation());
     }
 }

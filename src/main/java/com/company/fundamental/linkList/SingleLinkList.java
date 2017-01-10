@@ -13,6 +13,17 @@ public class SingleLinkList<T> implements Cloneable {
         return size;
     }
 
+    // R-3.9
+    public int sizeReimplementation() {
+        int counter = 0;
+        Node<T> node = head;
+        while (node != null) {
+            node = node.getNext();
+            counter++;
+        }
+        return counter;
+    }
+
     public void addFirst(T value) {
         this.head = new Node(value, head);
         if (isEmpty()) {
@@ -131,6 +142,16 @@ public class SingleLinkList<T> implements Cloneable {
         return newList;
     }
 
+    // R-3.12
+    public void rotate() {
+        if (isEmpty()) {
+            return;
+        }
+        tail.setNext(head);
+        tail = head;
+        head = head.getNext();
+        tail.setNext(null);
+    }
     public static void main(String[] args) throws CloneNotSupportedException {
         SingleLinkList<String> stringSingleLinkList = new SingleLinkList<String>();
         SingleLinkList<String> stringSingleLinkList2 = new SingleLinkList<String>();
@@ -140,6 +161,7 @@ public class SingleLinkList<T> implements Cloneable {
         stringSingleLinkList.addLast("is");
         stringSingleLinkList.addLast("good");
         stringSingleLinkList.addFirst("mr. ");
+        stringSingleLinkList.rotate();
         stringSingleLinkList2.addFirst("xiao");
         stringSingleLinkList2.addLast("yang");
         stringSingleLinkList2.addFirst("zhang");

@@ -50,6 +50,9 @@ public class CircularlyLinkedList<T> {
         return tail.element;
     }
     public void rotate() {
+        if (isEmpty()) {
+            return;
+        }
         tail = tail.next;
     }
     public T removeFirst() {
@@ -66,13 +69,26 @@ public class CircularlyLinkedList<T> {
             return element;
         }
     }
-
+    // R-3.10
+    public int sizeReimplementation() {
+        if (tail == null) {
+            return 0;
+        }
+        int counter = 1;
+        Node node = tail;
+        while (node.next != tail) {
+            counter++;
+            node = node.next;
+        }
+        return counter;
+    }
     public static void main(String[] args) {
         CircularlyLinkedList<String> linkedList = new CircularlyLinkedList<String>();
         linkedList.addFirst("is");
         linkedList.addLast("good");
         linkedList.addFirst("shawn");
         linkedList.addFirst("mr.");
+        System.out.println(linkedList.sizeReimplementation());
         linkedList.rotate();
         linkedList.rotate();
         linkedList.rotate();
