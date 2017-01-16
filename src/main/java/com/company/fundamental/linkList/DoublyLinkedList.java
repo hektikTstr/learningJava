@@ -111,26 +111,61 @@ public class DoublyLinkedList<T> {
         //removeBetween(trailer, trailer.prev.prev);
         return element;
     }
-
+    // R-3.16
+    public boolean equals(Object o) {
+        if (o == null || o.getClass() != getClass() || this.size != ((DoublyLinkedList)o).size) {
+            return false;
+        }
+        if (size() == 0 && ((DoublyLinkedList)o).size() == 0) {
+            return true;
+        }
+        Node cur = header.next;
+        Node walker = ((DoublyLinkedList)o).header.next;
+        do {
+            if (!cur.element.equals(walker.element)) {
+                return false;
+            }
+            cur = cur.next;
+            walker = walker.next;
+        } while (cur != trailer);
+        return true;
+    }
     public static void main(String[] args) {
         DoublyLinkedList list = new DoublyLinkedList();
+        DoublyLinkedList list2 = new DoublyLinkedList();
+        System.out.println(list.equals(list2));
         System.out.println(list.size());
         list.removeFirst();
         list.removeLast();
         list.addFirst("is");
+        System.out.println(list.equals(list2));
+        list2.addFirst("is");
+        System.out.println(list.equals(list2));
         System.out.println(list.sizeReimplementation());
         list.addLast("a");
+        System.out.println(list.equals(list2));
+        list2.addLast("a");
+        System.out.println(list.equals(list2));
         System.out.println(list.sizeReimplementation());
         list.addLast("good");
+        list2.addLast("good");
         System.out.println(list.sizeReimplementation());
         list.addFirst("shawn");
+        list2.addFirst("shawn");
+        System.out.println(list.equals(list2));
         System.out.println(list.sizeReimplementation());
         list.addFirst("mr.");
+        list2.addFirst("mr.");
         System.out.println(list.sizeReimplementation());
         list.addLast("boy");
+        System.out.println(list.equals(list2));
+        list2.addLast("boy");
+        System.out.println(list.equals(list2));
         System.out.println(list.sizeReimplementation());
         System.out.println(list.middle());
-        System.out.println(list.removeFirst());
+        System.out.println(list.removeLast());
+        System.out.println(list2.removeLast());
+        System.out.println(list.equals(list2));
         System.out.println(list.sizeReimplementation());
         System.out.println(list.removeLast());
         System.out.println(list.sizeReimplementation());

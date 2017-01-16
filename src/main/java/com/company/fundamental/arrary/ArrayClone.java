@@ -1,5 +1,9 @@
 package com.company.fundamental.arrary;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 public class ArrayClone {
     public class Person implements Cloneable {
         public int age;
@@ -35,5 +39,13 @@ public class ArrayClone {
         for (int i = 0; i < persons.length; i++) {
             persons2[i] = persons[i].clone();
         }
+
+        int[] c = {1, 2, 3};
+        int[] d = c.clone();
+        List e = Arrays.asList(c);
+//        int[] f = e.toArray(new Object[3]);
+//        d = Arrays.asList(c).toArray();
+        d = Arrays.copyOf(c, d.length);
+        System.arraycopy(c, 0, new int[c.length], 0, c.length);
     }
 }
