@@ -16,6 +16,22 @@ public class BinarySearch {
         }
     }
 
+    // R-5.2
+    public static int binarySearchSeq(int[] data, int target, int low, int high) {
+        if (low > high) {
+            return -1;
+        } else {
+            int mid = (low + high) / 2;
+            if (target == data[mid]) {
+                return mid;
+            } else if (target < data[mid]) {
+                return binarySearchSeq(data, target, low, mid - 1);
+            } else {
+                return binarySearchSeq(data, target, mid + 1, high);
+            }
+        }
+    }
+
     public static boolean binarySearchIterative(int[] data, int target) {
         int low = 0;
         int high = data.length - 1;
@@ -34,7 +50,8 @@ public class BinarySearch {
 
     public static void main(String[] arg) {
         int[] a = {2, 9, 16, 23};
-        System.out.println(binarySearch(a, 5, 0, 3));
-        System.out.println(binarySearchIterative(a, 23));
+//        System.out.println(binarySearch(a, 5, 0, 3));
+//        System.out.println(binarySearchIterative(a, 23));
+        System.out.println(binarySearchSeq(a, 16, 0, 3));
     }
 }
