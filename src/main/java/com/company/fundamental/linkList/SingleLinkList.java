@@ -1,8 +1,8 @@
 package com.company.fundamental.linkList;
 
 public class SingleLinkList<T> implements Cloneable {
-    private Node<T> head = null;
-    private Node<T> tail = null;
+    public Node<T> head = null;
+    public Node<T> tail = null;
     private int size = 0;
 
     public boolean isEmpty() {
@@ -81,22 +81,22 @@ public class SingleLinkList<T> implements Cloneable {
         return element;
     }
 
-    private class Node<T> {
+    public class Node<T> {
         Node(T value, Node<T> next) {
             this.value = value;
             this.next = next;
         }
         private T value;
         private Node<T> next;
-        private void setNext(Node<T> next) {
+        public void setNext(Node<T> next) {
             this.next = next;
         }
 
-        private Node<T> getNext() {
+        public Node<T> getNext() {
             return this.next;
         }
 
-        private T getValue() {
+        public T getValue() {
             return value;
         }
     }
