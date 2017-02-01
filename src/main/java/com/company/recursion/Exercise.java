@@ -1,6 +1,6 @@
 package com.company.recursion;
 
-import com.company.fundamental.linkList.SingleLinkList;
+import com.company.fundamental.linkList.SinglyLinkedList;
 
 import java.util.*;
 
@@ -263,7 +263,7 @@ public class Exercise {
     }
 
     // C-5.25
-    private static <T> SingleLinkList.Node reverseSingularLinkedList(SingleLinkList<T> list, SingleLinkList.Node node) {
+    private static <T> SinglyLinkedList.Node reverseSingularLinkedList(SinglyLinkedList<T> list, SinglyLinkedList.Node node) {
         if (list.isEmpty() || list.size() == 1) {
             return null;
         }
@@ -272,17 +272,17 @@ public class Exercise {
             list.tail = list.head;
             list.head = node;
         } else {
-            SingleLinkList.Node tempNode = reverseSingularLinkedList(list, node.getNext());
+            SinglyLinkedList.Node tempNode = reverseSingularLinkedList(list, node.getNext());
             tempNode.setNext(node);
         }
         return node;
     }
     public static void main(String[] args) {
-        SingleLinkList<String> singleLinkList = new SingleLinkList<>();
-        singleLinkList.addFirst("yang");
-        singleLinkList.addFirst("xiao");
-        singleLinkList.addFirst("zhang");
-        reverseSingularLinkedList(singleLinkList, singleLinkList.head);
+        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>();
+        singlyLinkedList.addFirst("yang");
+        singlyLinkedList.addFirst("xiao");
+        singlyLinkedList.addFirst("zhang");
+        reverseSingularLinkedList(singlyLinkedList, singlyLinkedList.head);
 //        int[] a = {1, 0, 4, 9, 2, 6, 5, 4, 10, 3};
 //        System.out.println(findMax(a, 0, a.length - 1));
 //        System.out.println(index);
