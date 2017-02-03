@@ -10,6 +10,9 @@ public class CircularlyLinkedList<T> {
         }
     }
     public int size = 0;
+    public int size() {
+        return size;
+    }
     public Node<T> tail = null;
     public boolean isEmpty() {
         return size == 0;
