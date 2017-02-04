@@ -1,6 +1,6 @@
 package com.company.queue;
 
-public class ArrayQueue<E> implements Queue<E> {
+public class ArrayQueue<E> implements CircularQueue<E> {
     private static final int CAPACITY = 1000;
     private E[] data;
     private int f = 0;
@@ -49,5 +49,32 @@ public class ArrayQueue<E> implements Queue<E> {
         f = (f + 1) % data.length;
         sz--;
         return answer;
+    }
+
+    //R-6.15
+    @Override
+    public void rotate() {
+        if (isEmpty() || size() == 1) {
+            return;
+        }
+        int avail = (f + sz) % data.length;
+        data[avail] = data[f];
+        data[f] = null;
+        f++;
+    }
+
+    public static void main(String[] args) {
+        CircularQueue<Integer> queue = new ArrayQueue<>();
+        queue.enqueue(1);
+        queue.rotate();
+        queue.enqueue(2);
+        queue.enqueue(3);
+        queue.enqueue(4);
+        queue.enqueue(5);
+        queue.rotate();
+        queue.rotate();
+        queue.rotate();
+        queue.rotate();
+        queue.rotate();
     }
 }

@@ -1,8 +1,6 @@
 package com.company.stack;
 
-import com.company.queue.Deque;
-import com.company.queue.LinkedDeque;
-import com.company.queue.Queue;
+import com.company.queue.*;
 
 public class Exercise {
     //R-6.4
@@ -100,9 +98,35 @@ public class Exercise {
         }
     }
 
+    //R-6.13
+    public static <E> void transfer2(Deque<E> orig, Queue<E> dest) {
+        E e = orig.removeFirst();
+        while (e != null) {
+            dest.enqueue(e);
+            e = orig.removeFirst();
+        }
+    }
+
+    //R-6.14
+    public static <E> void transfer3(Deque<E> orig, Stack<E> dest) {
+        E e = orig.removeLast();
+        while (e != null) {
+            dest.push(e);
+            e = orig.removeLast();
+        }
+    }
+
     public static void main(String[] args) {
         Stack<Integer> orig = new Exercise().new StackAdapter<>();
         Stack<Integer> target = new ArrayStack<>();
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.addLast(4);
+        deque.addLast(5);
+        Stack<Integer> stack = new LinkedStack<>();
+        transfer3(deque, stack);
         orig.push(5);
         orig.push(3);
         orig.push(7);
