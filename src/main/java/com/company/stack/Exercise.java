@@ -116,22 +116,68 @@ public class Exercise {
         }
     }
 
-    public static void main(String[] args) {
-        Stack<Integer> orig = new Exercise().new StackAdapter<>();
-        Stack<Integer> target = new ArrayStack<>();
-        Deque<Integer> deque = new ArrayDeque<>();
-        deque.addLast(1);
-        deque.addLast(2);
-        deque.addLast(3);
-        deque.addLast(4);
-        deque.addLast(5);
+    // C-6.19
+    public static int postfixNotationCalculation(String expression) {
+        char[] charArr = expression.toCharArray();
         Stack<Integer> stack = new LinkedStack<>();
-        transfer3(deque, stack);
-        orig.push(5);
-        orig.push(3);
-        orig.push(7);
-        orig.push(8);
-        transfer(orig, target);
-        removeAllElemInStack(target);
+        for (Character c : charArr) {
+            if (Character.isDigit(c)) {
+                stack.push(Character.getNumericValue(c));
+            } else {
+                int y = stack.pop();
+                int x = stack.pop();
+                int result = 0;
+                switch (c) {
+                    case '*':
+                        result = x * y;
+                        break;
+                    case '/':
+                        result = x / y;
+                        break;
+                    case '+':
+                        result = x + y;
+                        break;
+                    case '-':
+                        result = x - y;
+                        break;
+                    default:
+                        throw new UnsupportedOperationException();
+                }
+                stack.push(result);
+            }
+        }
+        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+//        Stack<Integer> orig = new Exercise().new StackAdapter<>();
+//        Stack<Integer> target = new ArrayStack<>();
+//        Deque<Integer> deque = new ArrayDeque<>();
+//        deque.addLast(1);
+//        deque.addLast(2);
+//        deque.addLast(3);
+//        deque.addLast(4);
+//        deque.addLast(5);
+//        Stack<Integer> stack = new LinkedStack<>();
+//        transfer3(deque, stack);
+//        orig.push(5);
+//        orig.push(3);
+//        orig.push(7);
+//        orig.push(8);
+//        transfer(orig, target);
+//        removeAllElemInStack(target);
+//        //C-6.17
+//        Stack<Integer> temp1 = new ArrayStack<>();
+//        Stack<Integer> temp2 = new ArrayStack<>();
+//        Stack<Integer> orig = new ArrayStack<>();
+//        orig.push(5);
+//        orig.push(3);
+//        orig.push(7);
+//        orig.push(8);
+//        transfer(orig, temp1);
+//        transfer(temp1, temp2);
+//        transfer(temp2, orig);
+
+        System.out.println(postfixNotationCalculation("52+83-*4/"));
     }
 }
