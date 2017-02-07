@@ -303,7 +303,7 @@ public class Exercise {
 //        a.add(4);
 //        Set<Set> b = outputAllUniqueSubsets(a);
 //        System.out.println(b.toString());
-//        hanoiTower(3, 'a', 'b', 'c');
+        hanoiTower(3, 'a', 'b', 'c');
 //        String s = "pots&pans";
 //        System.out.println(reverseString(s));
 //        String s = "gohangasalamiimalasagnahog";

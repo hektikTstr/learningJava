@@ -149,6 +149,16 @@ public class Exercise {
         return stack.pop();
     }
 
+    public static void hanoiTower(int n, Stack<Integer> start, Stack<Integer> aux, Stack<Integer> end) {
+        if (n == 1) {
+            end.push(start.pop());
+        } else {
+            hanoiTower(n - 1, start, end, aux);
+            hanoiTower(1, start, aux, end);
+            hanoiTower(n - 1, aux, start, end);
+        }
+    }
+
     public static void main(String[] args) {
 //        Stack<Integer> orig = new Exercise().new StackAdapter<>();
 //        Stack<Integer> target = new ArrayStack<>();
@@ -178,6 +188,13 @@ public class Exercise {
 //        transfer(temp1, temp2);
 //        transfer(temp2, orig);
 
-        System.out.println(postfixNotationCalculation("52+83-*4/"));
+//        System.out.println(postfixNotationCalculation("52+83-*4/"));
+        Stack<Integer> start = new ArrayStack<>(3);
+        Stack<Integer> end = new ArrayStack<>(3);
+        Stack<Integer> aux = new ArrayStack<>(3);
+        start.push(3);
+        start.push(2);
+        start.push(1);
+        hanoiTower(3, start, aux, end);
     }
 }
