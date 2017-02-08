@@ -1,4 +1,4 @@
-package com.company.queue;
+package com.company.deque;
 
 import com.company.fundamental.linkList.DoublyLinkedList;
 

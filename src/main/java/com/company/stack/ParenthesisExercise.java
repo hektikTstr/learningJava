@@ -40,6 +40,7 @@ public class ParenthesisExercise {
 
     public static void main(String[] args) {
         String[] tests = {
+                "(1234)",
                 "()",
                 "()[]<>{}",
                 "(<",

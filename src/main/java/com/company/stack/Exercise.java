@@ -1,6 +1,11 @@
 package com.company.stack;
 
+import com.company.deque.Deque;
+import com.company.deque.LinkedDeque;
 import com.company.queue.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Exercise {
     //R-6.4
@@ -159,6 +164,45 @@ public class Exercise {
         }
     }
 
+    // C-6.21
+    public static void enumeratePermutation(ArrayList<Integer> list,  ArrayList<Integer> temp) {
+        for (int i = 0; i < list.size(); i++) {
+            Integer j = list.remove(i);
+            temp.add(j);
+            if (list.size() == 0) {
+                System.out.println(Arrays.toString(temp.toArray()));
+            } else {
+                enumeratePermutation(list, temp);
+            }
+            list.add(i, temp.remove(temp.indexOf(j)));
+        }
+    }
+
+    // C-6.21
+    public static Queue<ArrayList<Integer>> enumeratePermutationWithStack(Stack<Integer> intStack) {
+        Queue<ArrayList<Integer>> arrListQueue = new ArrayQueue<>();
+        int intStackSize = intStack.size();
+        for (int i = 0; i < intStackSize; i++) {
+            Integer cur = intStack.pop();
+            int arrListQueueSize = arrListQueue.size();
+            if (arrListQueueSize == 0) {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(cur);
+                arrListQueue.enqueue(list);
+            } else {
+                for (int j = 0; j < arrListQueueSize; j++) {
+                    ArrayList<Integer> origList = arrListQueue.dequeue();
+                    for (int k = 0; k <= origList.size(); k++) {
+                        ArrayList<Integer> tempList = new ArrayList<>(origList);
+                        tempList.add(k, cur);
+                        arrListQueue.enqueue(tempList);
+                    }
+                }
+            }
+        }
+        return arrListQueue;
+    }
+
     public static void main(String[] args) {
 //        Stack<Integer> orig = new Exercise().new StackAdapter<>();
 //        Stack<Integer> target = new ArrayStack<>();
@@ -189,12 +233,26 @@ public class Exercise {
 //        transfer(temp2, orig);
 
 //        System.out.println(postfixNotationCalculation("52+83-*4/"));
-        Stack<Integer> start = new ArrayStack<>(3);
-        Stack<Integer> end = new ArrayStack<>(3);
-        Stack<Integer> aux = new ArrayStack<>(3);
-        start.push(3);
-        start.push(2);
-        start.push(1);
-        hanoiTower(3, start, aux, end);
+//        Stack<Integer> start = new ArrayStack<>(3);
+//        Stack<Integer> end = new ArrayStack<>(3);
+//        Stack<Integer> aux = new ArrayStack<>(3);
+//        start.push(3);
+//        start.push(2);
+//        start.push(1);
+//        hanoiTower(3, start, aux, end);
+//        System.out.println(Integer.toString(98));
+//        ArrayList<Integer> arrayList = new ArrayList<>();
+//        ArrayList<Integer> tempList = new ArrayList<>();
+//        arrayList.add(1);
+//        arrayList.add(2);
+//        arrayList.add(3);
+//        arrayList.add(4);
+//        enumeratePermutation(arrayList, tempList);
+        Stack<Integer> intStack = new ArrayStack<>();
+        intStack.push(4);
+        intStack.push(3);
+        intStack.push(2);
+        intStack.push(1);
+        enumeratePermutationWithStack(intStack);
     }
 }
