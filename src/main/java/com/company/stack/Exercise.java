@@ -1,3 +1,4 @@
+
 package com.company.stack;
 
 import com.company.deque.Deque;
@@ -178,6 +179,52 @@ public class Exercise {
         }
     }
 
+    public static void enumeratePermutation(int n, ArrayList<Integer> list,  ArrayList<Integer> temp) {
+        for (int i = 0; i < list.size(); i++) {
+            Integer j = list.remove(i);
+            temp.add(j);
+            if (n == 1) {
+                System.out.println(Arrays.toString(temp.toArray()));
+            } else {
+                enumeratePermutation(n - 1, list, temp);
+            }
+            list.add(i, temp.remove(temp.indexOf(j)));
+        }
+    }
+
+    public static void enumerateCombination(int n, int startPos, int[] arr,  StringBuffer outStr) {
+        if (n == 0) {
+            System.out.println(outStr);
+        } else {
+            for (int i = startPos; i < arr.length; i++) {
+                outStr.append(arr[i]);
+                enumerateCombination(n - 1, i + 1, arr, outStr);
+                outStr.deleteCharAt(outStr.length() - 1);
+            }
+        }
+    }
+
+    public static void combine(String instr, StringBuffer outstr, int index)
+    {
+        for (int i = index; i < instr.length(); i++)
+        {
+            outstr.append(instr.charAt(i));
+            System.out.println(outstr);
+            combine(instr, outstr, i + 1);
+            outstr.deleteCharAt(outstr.length() - 1);
+        }
+    }
+
+    public static void combinations2(String[] arr, int len, int startPosition, String[] result){
+        if (len == 0){
+            System.out.println(Arrays.toString(result));
+            return;
+        }
+        for (int i = startPosition; i <= arr.length-len; i++){
+            result[result.length - len] = arr[i];
+            combinations2(arr, len-1, i+1, result);
+        }
+    }
     // C-6.21
     public static Queue<ArrayList<Integer>> enumeratePermutationWithStack(Stack<Integer> intStack) {
         Queue<ArrayList<Integer>> arrListQueue = new ArrayQueue<>();
@@ -248,11 +295,31 @@ public class Exercise {
 //        arrayList.add(3);
 //        arrayList.add(4);
 //        enumeratePermutation(arrayList, tempList);
-        Stack<Integer> intStack = new ArrayStack<>();
-        intStack.push(4);
-        intStack.push(3);
-        intStack.push(2);
-        intStack.push(1);
-        enumeratePermutationWithStack(intStack);
+//        Stack<Integer> intStack = new ArrayStack<>();
+//        intStack.push(4);
+//        intStack.push(3);
+//        intStack.push(2);
+//        intStack.push(1);
+//        enumeratePermutationWithStack(intStack);
+//        ArrayList<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        list.add(2);
+//        list.add(3);
+//        list.add(4);
+//        ArrayList<Integer> list2 = new ArrayList<>(list);
+
+//        ArrayList<Integer> arrayList = new ArrayList<>();
+//        ArrayList<Integer> tempList = new ArrayList<>();
+//        arrayList.add(1);
+//        arrayList.add(2);
+//        arrayList.add(3);
+//        arrayList.add(4);
+////        enumeratePermutation(4, arrayList, tempList);
+        int a[] = {1, 2, 3, 4, 5, 6};
+        enumerateCombination(2, 1, a, new StringBuffer());
+//        String[] arr = {"1","2","3","4"};
+//        combinations2(arr, 2, 0, new String[2]);
+//        StringBuffer a = new StringBuffer();
+//        combine("1234", a, 0);
     }
 }
