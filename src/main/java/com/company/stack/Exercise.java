@@ -4,9 +4,12 @@ package com.company.stack;
 import com.company.deque.Deque;
 import com.company.deque.LinkedDeque;
 import com.company.queue.*;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Exercise {
     //R-6.4
@@ -190,6 +193,67 @@ public class Exercise {
             }
             list.add(i, temp.remove(temp.indexOf(j)));
         }
+    }
+
+    public static <T> void generateAllSubset(Stack<T> stack, Queue<T> queue) {
+        Set<Integer> origSet = new LinkedHashSet<>();
+        origSet.add(1);
+        origSet.add(2);
+        origSet.add(3);
+        origSet.add(4);
+        origSet.forEach(System.out::println);
+    }
+
+    @Test
+    public void testGenerateAllSubset() {
+        generateAllSubset(null, null);
+    }
+
+    //C-6.24
+    static <T> boolean checkStackElement(Stack<T> stack, T element) {
+        if (stack.isEmpty() || element == null) {
+            return false;
+        }
+        boolean isFound = false;
+        Queue<T> queue = new ArrayQueue<>(stack.size());
+        T tempElement = stack.pop();
+        while (tempElement != null) {
+            queue.enqueue(tempElement);
+            if (tempElement.equals(element)) {
+                isFound = true;
+                break;
+            }
+            tempElement = stack.pop();
+        }
+
+        int size = queue.size();
+
+        while (!queue.isEmpty()) {
+            stack.push(queue.dequeue());
+        }
+
+        for (int i = 0; i < size; i++) {
+            queue.enqueue(stack.pop());
+        }
+
+        while (!queue.isEmpty()) {
+            stack.push(queue.dequeue());
+        }
+
+        return isFound;
+    }
+
+    @Test
+    public void testCheckStackElement() {
+        Stack<Integer> stack = new ArrayStack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(7);
+        stack.push(6);
+        stack.push(9);
+        System.out.println(checkStackElement(stack, 0));
     }
 
     public static void enumerateCombination(int n, int startPos, int[] arr,  StringBuffer outStr) {
