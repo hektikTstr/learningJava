@@ -1,6 +1,6 @@
 package com.company.queue;
 
-public class ArrayQueue<E> implements CircularQueue<E> {
+public class ArrayQueue<E> implements CircularQueue<E>, Cloneable {
     private static final int CAPACITY = 1000;
     private E[] data;
     private int f = 0;
@@ -60,11 +60,22 @@ public class ArrayQueue<E> implements CircularQueue<E> {
         int avail = (f + sz) % data.length;
         data[avail] = data[f];
         data[f] = null;
-        f++;
+        f = (f + 1) % data.length;
     }
 
-    public static void main(String[] args) {
-        CircularQueue<Integer> queue = new ArrayQueue<>();
+    //C-6.28
+    @Override
+    public ArrayQueue<E> clone() throws CloneNotSupportedException {
+        ArrayQueue<E> queue = (ArrayQueue<E>) super.clone();
+        queue.data = (E[]) new Object[this.data.length];
+        for (int i = 0; i < size(); i++) {
+            queue.data[(f + i) % data.length] = this.data[(f + i) % data.length];
+        }
+        return queue;
+    }
+
+    public static void main(String[] args) throws CloneNotSupportedException {
+        ArrayQueue<Integer> queue = new ArrayQueue<>(6);
         queue.enqueue(1);
         queue.rotate();
         queue.enqueue(2);
@@ -75,6 +86,6 @@ public class ArrayQueue<E> implements CircularQueue<E> {
         queue.rotate();
         queue.rotate();
         queue.rotate();
-        queue.rotate();
+        ArrayQueue<Integer> queueNew = queue.clone();
     }
 }
