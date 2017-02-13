@@ -3,7 +3,7 @@ package com.company.fundamental.linkList;
 public class SinglyLinkedList<T> implements Cloneable {
     public Node<T> head = null;
     public Node<T> tail = null;
-    private int size = 0;
+    public int size = 0;
 
     public boolean isEmpty() {
         return size() == 0;
