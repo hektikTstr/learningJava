@@ -2,7 +2,8 @@ package com.company.stack;
 
 import java.util.Arrays;
 
-public class ArrayStack<E> implements Stack<E> {
+
+public class ArrayStack<E> implements Stack<E>, Cloneable {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int t = -1;
@@ -58,10 +59,22 @@ public class ArrayStack<E> implements Stack<E> {
         }
     }
 
-    public static void main(String args[]) {
+    //C-6.27
+    @Override
+    public ArrayStack<E> clone() throws CloneNotSupportedException {
+        ArrayStack<E> newStack = (ArrayStack<E>) super.clone();
+        newStack.data = (E[]) new Object[this.data.length];
+        for(int i = 0; i < size(); i++) {
+            newStack.data[i] = data[i];
+        }
+        return newStack;
+    }
+
+    public static void main(String args[]) throws CloneNotSupportedException {
         Stack<Integer> stack = new ArrayStack<>();
         stack.push(5);
         stack.push(3);
+        Stack<Integer> stack1 = ((ArrayStack)stack).clone();
         System.out.println(stack.size());
         System.out.println(stack.pop());
         System.out.println(stack.isEmpty());
