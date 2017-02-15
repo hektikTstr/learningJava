@@ -5,6 +5,6 @@ public interface List<E> {
     boolean isEmpty();
     E get(int i) throws IndexOutOfBoundsException;
     E set(int i, E e) throws IndexOutOfBoundsException;
-    void add(int i, E e);
+    void add(int i, E e) throws IndexOutOfBoundsException;
     E remove(int i) throws IndexOutOfBoundsException;
 }
