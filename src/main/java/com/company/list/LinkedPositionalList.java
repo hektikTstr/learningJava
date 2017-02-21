@@ -1,5 +1,10 @@
 package com.company.list;
 
+import org.testng.annotations.Test;
+
+import java.util.*;
+import java.util.List;
+
 public class LinkedPositionalList<E> implements PositionalList<E> {
     private static class Node<E> implements Position<E> {
         private E element;
@@ -151,4 +156,76 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         node.setPrev(null);
         return answer;
     }
+
+    private class PositionIterator implements Iterator<Position<E>> {
+        private Position<E> cursor = first(); // position of the next element to report
+        private Position<E> recent = null; // position of last reported element
+
+        @Override
+        public boolean hasNext() {
+            return (cursor != null);
+        }
+
+        @Override
+        public Position<E> next() throws NoSuchElementException {
+            if (cursor == null) {
+                throw new NoSuchElementException("nothing left");
+            }
+            recent = cursor;
+            cursor = after(cursor);
+            return recent;
+        }
+
+        @Override
+        public void remove() {
+            if (recent == null) {
+                throw new IllegalStateException("nothing to remove");
+            }
+            LinkedPositionalList.this.remove(recent);
+            recent = null;
+        }
+    }
+
+    private class PositionIterable implements Iterable<Position<E>> {
+        @Override
+        public Iterator<Position<E>> iterator() {
+            return new PositionIterator();
+        }
+    }
+
+    public Iterable<Position<E>> positions() {
+        return new PositionIterable(); // create a new instance of the inner class
+    }
+
+    private class ElementIterator implements Iterator<E> {
+        Iterator<Position<E>> posIterator = new PositionIterator();
+
+        @Override
+        public boolean hasNext() {
+            return posIterator.hasNext();
+        }
+
+        @Override
+        public E next() {
+            return posIterator.next().getElement();
+        }
+
+        @Override
+        public void remove() {
+            posIterator.remove();
+        }
+    }
+
+    public Iterator<E> iterator() {
+        return new ElementIterator();
+    }
+
+    @Test
+    public void test() {
+        Integer[] arr = {1, 2, 3, 4, 5, 6, 7, 8}; // allowed by autoboxing
+        List listArr = (java.util.List) Arrays.asList(arr);
+        Collections.shuffle(listArr);
+    }
+
+//    public static void insertionSort
 }

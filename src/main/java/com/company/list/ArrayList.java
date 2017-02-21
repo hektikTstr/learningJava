@@ -1,6 +1,7 @@
 package com.company.list;
 
-import com.company.queue.ArrayQueue;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayList<E> implements List<E> {
     public static final int CAPACITY = 16;
@@ -88,5 +89,43 @@ public class ArrayList<E> implements List<E> {
             temp[i] = data[i];
         }
         data = temp;
+    }
+
+    private class ArrayIterator implements Iterator<E> {
+        private int j = 0; // index of the next element to report
+        private boolean removable = false; // can remove be called at this time?
+        @Override
+        public boolean hasNext() {
+            return j < size;
+        }
+
+        @Override
+        public E next() throws NoSuchElementException {
+            if (j == size) {
+                throw new NoSuchElementException("No next element");
+            }
+            removable = true; // this element can subsequently be removed
+            return data[j++]; // post-increment j, so it is ready for future call to next
+        }
+
+
+        /**
+         * Removes the element returned by most recent call to next.
+         * @throws IllegalStateException if next has not yet been called
+         * @throws IllegalStateException if remove was already called since recent next
+         */
+        @Override
+        public void remove() {
+            if (!removable) {
+                throw new IllegalStateException("nothing to remove");
+            }
+            ArrayList.this.remove(j - 1); // that was the last one returned
+            j--; // next element has shifted one cell to the left
+            removable = false; // do not allow remove again until next is called
+        }
+    }
+
+    public Iterator<E> iterator() {
+        return new ArrayIterator();
     }
 }
