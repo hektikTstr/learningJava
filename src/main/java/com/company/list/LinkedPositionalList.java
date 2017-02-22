@@ -227,5 +227,21 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         Collections.shuffle(listArr);
     }
 
-//    public static void insertionSort
+    public static void insertionSort(PositionalList<Integer> list) {
+        Position<Integer> marker = list.first(); // last position known to be sorted
+        while (marker != list.last()) {
+            Position<Integer> pivot = list.after(marker);
+            int value = pivot.getElement(); // number to be placed
+            if (value > marker.getElement()) { // pivot is already sorted
+                marker = pivot;
+            } else {
+                Position<Integer> walk = marker;
+                while (walk != list.first() && list.before(walk).getElement() > value) {
+                    walk = list.before(walk);
+                }
+                list.remove(pivot);
+                list.addBefore(walk, value);
+            }
+        }
+    }
 }
