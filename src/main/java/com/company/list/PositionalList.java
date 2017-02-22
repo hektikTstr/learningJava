@@ -1,6 +1,8 @@
 package com.company.list;
 
-public interface PositionalList<E> {
+import java.util.Iterator;
+
+public interface PositionalList<E> extends Iterable<E> {
     int size();
     boolean isEmpty();
     Position<E> first();
@@ -13,4 +15,5 @@ public interface PositionalList<E> {
     Position<E> addAfter(Position<E> p, E e) throws IllegalArgumentException;
     E set(Position<E> p, E e) throws IllegalArgumentException;
     E remove(Position<E> p) throws IllegalArgumentException;
+    Iterator<E> iterator();
 }

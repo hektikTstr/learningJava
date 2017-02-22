@@ -1,6 +1,8 @@
 package com.company.list;
 
-public interface List<E> {
+import java.util.Iterator;
+
+public interface List<E> extends Iterable {
     int size();
     boolean isEmpty();
     E get(int i) throws IndexOutOfBoundsException;
