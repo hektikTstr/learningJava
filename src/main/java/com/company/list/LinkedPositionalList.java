@@ -1,9 +1,7 @@
 package com.company.list;
 
-import org.testng.annotations.Test;
-
-import java.util.*;
-import java.util.List;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedPositionalList<E> implements PositionalList<E> {
     private static class Node<E> implements Position<E> {
@@ -85,12 +83,12 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
     @Override
     public Position<E> first() {
-        return header.getNext();
+        return position(header.getNext());
     }
 
     @Override
     public Position<E> last() {
-        return trailer.getPrev();
+        return position(trailer.getPrev());
     }
 
     @Override
@@ -218,13 +216,6 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
     public Iterator<E> iterator() {
         return new ElementIterator();
-    }
-
-    @Test
-    public void test() {
-        Integer[] arr = {1, 2, 3, 4, 5, 6, 7, 8}; // allowed by autoboxing
-        List listArr = (java.util.List) Arrays.asList(arr);
-        Collections.shuffle(listArr);
     }
 
     public static void insertionSort(PositionalList<Integer> list) {

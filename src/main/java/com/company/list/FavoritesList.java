@@ -1,5 +1,7 @@
 package com.company.list;
 
+import org.testng.annotations.Test;
+
 import java.util.Iterator;
 
 public class FavoritesList<E> {
@@ -65,5 +67,17 @@ public class FavoritesList<E> {
             result.addLast(iter.next().getValue( ));
         }
         return result;
+    }
+
+    @Test
+    public void test() {
+        FavoritesList<String> favoritesList = new FavoritesList<>();
+        favoritesList.access("google");
+        favoritesList.access("baidu");
+        favoritesList.access("sina");
+        favoritesList.access("tencent");
+        favoritesList.access("tencent");
+        favoritesList.access("sina");
+        favoritesList.access("google");
     }
 }
