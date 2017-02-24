@@ -79,5 +79,6 @@ public class FavoritesList<E> {
         favoritesList.access("tencent");
         favoritesList.access("sina");
         favoritesList.access("google");
+        Iterable iterable = favoritesList.getFavorites(2);
     }
 }

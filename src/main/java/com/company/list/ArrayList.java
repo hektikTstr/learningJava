@@ -40,8 +40,8 @@ public class ArrayList<E> implements List<E> {
         return temp;
     }
 
-    @Override
-    public void add(int i, E e) throws IndexOutOfBoundsException {
+    @Deprecated
+    public void add2(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
         if (size == data.length) {
             throw new IllegalStateException("Array is full");
@@ -53,7 +53,8 @@ public class ArrayList<E> implements List<E> {
         size++;
     }
 
-    public void add2(int i, E e) throws IndexOutOfBoundsException {
+    @Override
+    public void add(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
         if (size == data.length) {
             resize(2 * data.length);
