@@ -66,6 +66,28 @@ public class ArrayList<E> implements List<E> {
         size++;
     }
 
+    // R-7.9
+    public void addNewImplementation(int i, E e) throws IndexOutOfBoundsException {
+        checkIndex(i, size + 1);
+        if (size == data.length) {
+            E[] temp = (E[]) new Object[2 * data.length];
+            for (int k = 0; k < i; k++) {
+                temp[k] = data[k];
+            }
+            for (int k = i; k < size; k++) {
+                temp[k + 1] = data[k];
+            }
+            data = temp;
+        } else {
+            for (int k = size; k > i; k--) {
+                data[k] = data[k - 1];
+            }
+        }
+        data[i] = e;
+        size++;
+    }
+
+
     @Override
     public E remove(int i) throws IndexOutOfBoundsException {
         checkIndex(i, size);
@@ -129,5 +151,14 @@ public class ArrayList<E> implements List<E> {
     @Override
     public Iterator<E> iterator() {
         return new ArrayIterator();
+    }
+
+    // R-7.5
+    public void trimToSize() {
+        E[] temp = (E[]) new Object[size];
+        for (int i = 0; i < size; i++) {
+            temp[i] = data[i];
+        }
+        data = temp;
     }
 }
