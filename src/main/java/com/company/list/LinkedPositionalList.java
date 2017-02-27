@@ -121,10 +121,22 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         return addBetween(e, trailer.getPrev(), trailer);
     }
 
+    //R-7.11
+    public Position<E> addLastNewImplementation(E e) {
+        Position<E> position = last();
+        return addAfter(position, e);
+    }
+
     @Override
     public Position<E> addBefore(Position<E> p, E e) throws IllegalArgumentException {
         Node<E> node = validate(p);
         return addBetween(e, node.getPrev(), node);
+    }
+
+    //R-7.11
+    public Position<E> addBeforeNewImplementation(Position<E> p, E e) {
+        Position<E> position = before(p);
+        return addAfter(position, e);
     }
 
     @Override

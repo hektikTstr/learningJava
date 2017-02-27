@@ -4,35 +4,50 @@ package com.company.stack;
 public class ArrayStackUnlimitedCapacity<E> implements Stack<E> {
     public static final int CAPACITY = 16;
     E[] data = (E[]) new Object[CAPACITY];
-    private int size = 0;
+    private int t = -1;
 
     @Override
     public int size() {
-        return size;
+        return t + 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return t == -1;
     }
 
     protected void resize(int capacity) {
         E[] temp = (E[]) new Object[capacity];
-
+        for (int k = 0; k < size(); k++) {
+            temp[k] = data[k];
+        }
+        data = temp;
     }
 
     @Override
     public void push(E e) {
-
+        if (size() == data.length) {
+            resize(2 * data.length);
+        }
+        data[size()] = e;
+        t++;
     }
 
     @Override
     public E top() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        return data[t];
     }
 
     @Override
     public E pop() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        E temp = data[t];
+        data[t--] = null;
+        return temp;
     }
 }
