@@ -1,5 +1,7 @@
 package com.company.list;
 
+import org.testng.annotations.Test;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -173,7 +175,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
         @Override
         public boolean hasNext() {
-            return (cursor != null);
+            return (cursor != null) && after(cursor) != null;
         }
 
         @Override
@@ -228,6 +230,32 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
     public Iterator<E> iterator() {
         return new ElementIterator();
+    }
+
+    @Override
+    public int indexOf(Position<E> p) {
+        if (isEmpty()) {
+            return -1;
+        }
+        validate(p);
+        Iterator<E> iterator = iterator();
+        int index = 0;
+        while (iterator.hasNext()){
+            iterator.next();
+            index++;
+        }
+
+        return index;
+    }
+
+    @Test
+    public void testIndexOf() {
+        PositionalList<Integer> positionalList = new LinkedPositionalList<>();
+        positionalList.addLast(1);
+        positionalList.addLast(2);
+        positionalList.addLast(3);
+        positionalList.addLast(4);
+        int index = positionalList.indexOf(positionalList.last());
     }
 
     public static void insertionSort(PositionalList<Integer> list) {
