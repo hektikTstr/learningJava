@@ -18,4 +18,6 @@ public interface PositionalList<E> extends Iterable<E> {
     Iterator<E> iterator();
     // R-7.12
     int indexOf(Position<E> p);
+    // R-7.13
+    Position<E> findPosition(E e);
 }

@@ -248,6 +248,16 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         return index;
     }
 
+    // R-7.13
+    @Override
+    public Position<E> findPosition(E e) {
+        Position<E> position = first();
+        while (position != null && !position.getElement().equals(e)) {
+            position = after(position);
+        }
+        return position;
+    }
+
     @Test
     public void testIndexOf() {
         PositionalList<Integer> positionalList = new LinkedPositionalList<>();
@@ -256,6 +266,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         positionalList.addLast(3);
         positionalList.addLast(4);
         int index = positionalList.indexOf(positionalList.last());
+        Position<Integer> position = positionalList.findPosition(3);
     }
 
     public static void insertionSort(PositionalList<Integer> list) {
