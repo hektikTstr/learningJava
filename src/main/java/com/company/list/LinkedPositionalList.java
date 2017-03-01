@@ -49,7 +49,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     private Node<E> trailer;
     private int size = 0;
 
-    public LinkedPositionalList( ) {
+    public LinkedPositionalList() {
         header = new Node<>(null, null, null);
         trailer = new Node<>(null, header, null);
         header.setNext(trailer);
