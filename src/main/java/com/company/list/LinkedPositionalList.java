@@ -175,7 +175,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
         @Override
         public boolean hasNext() {
-            return (cursor != null) && after(cursor) != null;
+            return cursor != null;
         }
 
         @Override
@@ -228,24 +228,56 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         }
     }
 
+    // R-7.16
+    private class ElementEvenIterator extends ElementIterator {
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            if (index % 2 == 0) {
+                return super.hasNext();
+            } else {
+                super.next();
+                index++;
+                return super.hasNext();
+            }
+        }
+
+        @Override
+        public E next() {
+            if (index % 2 == 0) {
+                return super.next();
+            }
+            return null;
+        }
+    }
+
     public Iterator<E> iterator() {
         return new ElementIterator();
     }
 
+    public Iterator<E> alternateIterator() {
+        return new ElementEvenIterator();
+    }
+
+    @Test
+    public void testAlternateIterator() {
+
+    }
+
     @Override
-    public int indexOf(Position<E> p) {
-        if (isEmpty()) {
-            return -1;
-        }
-        validate(p);
+    public int indexOf(Position<E> p) {validate(p);
         Iterator<E> iterator = iterator();
-        int index = 0;
+        int index = -1;
         while (iterator.hasNext()){
-            iterator.next();
+            E temp = iterator.next();
             index++;
+            if (temp.equals(p.getElement())) {
+                return index;
+            }
         }
 
-        return index;
+        return -1;
     }
 
     // R-7.13
@@ -266,7 +298,13 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         positionalList.addLast(3);
         positionalList.addLast(4);
         int index = positionalList.indexOf(positionalList.last());
+        index = positionalList.indexOf(positionalList.first());
         Position<Integer> position = positionalList.findPosition(3);
+        Iterator<Integer> iterator = positionalList.iterator();
+        while (iterator.hasNext()) {
+            Integer integer = iterator.next();
+            System.out.println(integer);
+        }
     }
 
     public static void insertionSort(PositionalList<Integer> list) {
