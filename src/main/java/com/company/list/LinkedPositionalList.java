@@ -236,19 +236,25 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         public boolean hasNext() {
             if (index % 2 == 0) {
                 return super.hasNext();
-            } else {
+            } else if (super.hasNext()) {
                 super.next();
                 index++;
                 return super.hasNext();
+            } else {
+                return false;
             }
         }
 
         @Override
         public E next() {
             if (index % 2 == 0) {
+                index++;
+                return super.next();
+            } else {
+                index += 2;
+                super.next();
                 return super.next();
             }
-            return null;
         }
     }
 
@@ -262,7 +268,19 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
     @Test
     public void testAlternateIterator() {
-
+        LinkedPositionalList<Integer> positionalList = new LinkedPositionalList<>();
+        positionalList.addLast(1);
+        positionalList.addLast(2);
+        positionalList.addLast(3);
+        positionalList.addLast(4);
+        Iterator<Integer> iterator = positionalList.alternateIterator();
+        while (iterator.hasNext()) {
+            int integer = iterator.next();
+            System.out.println(integer);
+        }
+        for (Integer i : positionalList) {
+            System.out.println(i);
+        }
     }
 
     @Override
