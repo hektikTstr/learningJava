@@ -1,7 +1,8 @@
 package com.company.list;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import org.testng.annotations.Test;
+
+import java.util.*;
 
 public class ArrayList<E> implements List<E> {
     public static final int CAPACITY = 16;
@@ -160,5 +161,37 @@ public class ArrayList<E> implements List<E> {
             temp[i] = data[i];
         }
         data = temp;
+    }
+
+    // R-7.18
+    public boolean contains(Object o) {
+        for (E e : (Iterable<E>) this) {
+            if (e.equals(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // R-7.19
+    public void clear() {
+        Iterator<E> iterator = iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+    }
+
+    @Test
+    public void test() {
+        ArrayList<Integer> a = new ArrayList<>();
+        a.add(0, 1);
+        a.add(1, 2);
+        a.add(2, 3);
+        a.clear();
+
+        // R-7.20
+        Integer[] arr = new Integer[]{1, 2, 3};
+        Collections.reverse(Arrays.asList(arr));
     }
 }

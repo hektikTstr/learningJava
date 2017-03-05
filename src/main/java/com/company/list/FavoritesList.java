@@ -12,6 +12,7 @@ public class FavoritesList<E> {
         public int getCount() { return count; }
         public E getValue() { return value; }
         public void increment() { count++; }
+        private void resetCount() { count = 0; }
     }
 
     PositionalList<Item<E>> list = new LinkedPositionalList<>();
@@ -69,6 +70,12 @@ public class FavoritesList<E> {
         return result;
     }
 
+    public void resetCounts() {
+        for (Item<E> e : list) {
+            e.resetCount();
+        }
+    }
+
     @Test
     public void test() {
         FavoritesList<String> favoritesList = new FavoritesList<>();
@@ -80,5 +87,6 @@ public class FavoritesList<E> {
         favoritesList.access("sina");
         favoritesList.access("google");
         Iterable iterable = favoritesList.getFavorites(2);
+        favoritesList.resetCounts();
     }
 }

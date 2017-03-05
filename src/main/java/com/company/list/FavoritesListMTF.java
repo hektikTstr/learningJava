@@ -1,5 +1,7 @@
 package com.company.list;
 
+import org.testng.annotations.Test;
+
 public class FavoritesListMTF<E> extends FavoritesList<E> {
     protected void moveUp(Position<Item<E>> p) {
         if (p != list.first()) {
@@ -31,5 +33,24 @@ public class FavoritesListMTF<E> extends FavoritesList<E> {
             temp.remove(highPos);
         }
         return result;
+    }
+
+    // R-7.21
+    @Test
+    public void test() {
+        FavoritesList<String> favoritesList = new FavoritesListMTF<>();
+        favoritesList.access("a");
+        favoritesList.access("b");
+        favoritesList.access("c");
+        favoritesList.access("d");
+        favoritesList.access("e");
+        favoritesList.access("f");
+        favoritesList.access("a");
+        favoritesList.access("c");
+        favoritesList.access("f");
+        favoritesList.access("b");
+        favoritesList.access("d");
+        favoritesList.access("e");
+        Iterable iterable = favoritesList.getFavorites(2);
     }
 }
