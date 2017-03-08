@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import java.util.*;
 
-public class ArrayList<E> implements List<E> {
+public class ArrayList<E> implements List<E>, Cloneable {
     public static final int CAPACITY = 16;
     private E[] data;
     private int size = 0;
@@ -182,16 +182,26 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
+    // C-7.27
+    @Override
+    public ArrayList<E> clone() throws CloneNotSupportedException {
+        ArrayList<E> arrayList = (ArrayList<E>) super.clone();
+        arrayList.data = this.data.clone();
+        return arrayList;
+    }
+
     @Test
-    public void test() {
+    public void test() throws CloneNotSupportedException {
         ArrayList<Integer> a = new ArrayList<>();
         a.add(0, 1);
         a.add(1, 2);
         a.add(2, 3);
-        a.clear();
+//        a.clear();
 
         // R-7.20
         Integer[] arr = new Integer[]{1, 2, 3};
         Collections.reverse(Arrays.asList(arr));
+
+        List<Integer> newList = a.clone();
     }
 }
