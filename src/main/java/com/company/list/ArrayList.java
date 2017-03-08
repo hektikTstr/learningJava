@@ -98,6 +98,9 @@ public class ArrayList<E> implements List<E>, Cloneable {
         }
         data[size - 1] = null;
         size--;
+        if (checkIfShrinkNeeded()) {
+            halveSize();
+        }
         return temp;
     }
 
@@ -190,12 +193,27 @@ public class ArrayList<E> implements List<E>, Cloneable {
         return arrayList;
     }
 
+    // C-7.29
+    private boolean checkIfShrinkNeeded() {
+        return size < data.length / 4;
+    }
+
+    // C-7.29
+    private void halveSize() {
+        E[] temp = (E[]) new Object[data.length / 2];
+        for (int i = 0; i < size; i++) {
+            temp[i] = data[i];
+        }
+        data = temp;
+    }
+
     @Test
     public void test() throws CloneNotSupportedException {
         ArrayList<Integer> a = new ArrayList<>();
         a.add(0, 1);
         a.add(1, 2);
         a.add(2, 3);
+        a.remove(2);
 //        a.clear();
 
         // R-7.20
