@@ -308,6 +308,19 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         return position;
     }
 
+    // C-7.36
+    @Override
+    public Position<E> positionAtIndex(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || i >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Position<E> walker = first();
+        for (int k = 0; k < i; k++) {
+            walker = after(walker);
+        }
+        return walker;
+    }
+
     @Test
     public void testIndexOf() {
         PositionalList<Integer> positionalList = new LinkedPositionalList<>();
@@ -315,6 +328,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         positionalList.addLast(2);
         positionalList.addLast(3);
         positionalList.addLast(4);
+        Position<Integer> position1 = positionalList.positionAtIndex(2);
         int index = positionalList.indexOf(positionalList.last());
         index = positionalList.indexOf(positionalList.first());
         Position<Integer> position = positionalList.findPosition(3);

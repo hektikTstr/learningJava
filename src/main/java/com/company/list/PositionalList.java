@@ -20,4 +20,5 @@ public interface PositionalList<E> extends Iterable<E> {
     int indexOf(Position<E> p);
     // R-7.13
     Position<E> findPosition(E e);
+    Position<E> positionAtIndex(int i) throws IndexOutOfBoundsException;
 }
