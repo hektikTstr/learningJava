@@ -4,7 +4,8 @@ import org.testng.annotations.Test;
 
 import java.util.Iterator;
 
-public class FavoritesList<E> {
+// C-7.57
+public class FavoritesArrayList<E> {
     protected static class Item<E> {
         private E value;
         private int count = 0;
@@ -15,27 +16,33 @@ public class FavoritesList<E> {
         private void resetCount() { count = 0; }
     }
 
-    PositionalList<Item<E>> list = new LinkedPositionalList<>();
-    public FavoritesList() {}
-    protected E value(Position<Item<E>> p) { return p.getElement().getValue(); }
-    protected int count(Position<Item<E>> p) { return p.getElement( ).getCount(); }
-    protected Position<Item<E>> findPosition(E e) {
-        Position<Item<E>> walk = list.first();
-        while (walk != null && !e.equals(value(walk))) {
-            walk = list.after(walk);
+    List<Item<E>> list = new ArrayList<>();
+    public FavoritesArrayList() {}
+
+    protected E value(int i) { return list.get(i).getValue(); }
+
+    protected int count(int i) { return list.get(i).getCount(); }
+
+    protected int findPosition(E e) {
+        for (int i = 0; i < list.size(); i++) {
+            if (e.equals(list.get(i).getValue())) {
+                return i;
+            }
         }
-        return walk;
+        return -1;
     }
 
-    protected void moveUp(Position<Item<E>> p) {
-        int cnt = count(p);
-        Position<Item<E>> walk = p;
-        while (walk != list.first() && count(list.before(walk)) < cnt) {
-            walk = list.before(walk);
+    protected void moveUp(int i) {
+        int cnt = count(i);
+        int index = i;
+        for (int k = i - 1; k >= 0; k--) {
+            if (count(k) < cnt) {
+                index = k;
+            } else {
+                break;
+            }
         }
-        if (walk != p) {
-            list.addBefore(walk, list.remove(p));
-        }
+        list.add(index, list.remove(i));
     }
 
     public int size() { return list.size(); }
@@ -43,18 +50,20 @@ public class FavoritesList<E> {
     public boolean isEmpty() { return list.isEmpty(); }
 
     public void access(E e) {
-        Position<Item<E>> p = findPosition(e);
-        if (p == null) {
-            p = list.addLast(new Item<E>(e));
+        int i = findPosition(e);
+        Item<E> item = new Item<>(e);
+        if (i == -1) {
+            list.add(size(), item);
+            i = size() - 1;
         }
-        p.getElement().increment();
-        moveUp(p);
+        list.get(i).increment();
+        moveUp(i);
     }
 
     public void remove(E e) {
-        Position<Item<E>> p = findPosition(e);
-        if (p != null) {
-            list.remove(p);
+        int i = findPosition(e);
+        if (i != -1) {
+            list.remove(i);
         }
     }
 
@@ -62,10 +71,10 @@ public class FavoritesList<E> {
         if (k < 0 || k > size()) {
             throw new IllegalArgumentException("Invalid k");
         }
-        PositionalList<E> result = new LinkedPositionalList<>();
+        List<E> result = new ArrayList<>();
         Iterator<Item<E>> iter = list.iterator();
         for (int j = 0; j < k; j++) {
-            result.addLast(iter.next().getValue( ));
+            result.add(result.size(), iter.next().getValue());
         }
         return result;
     }
@@ -78,7 +87,7 @@ public class FavoritesList<E> {
 
     @Test
     public void test() {
-        FavoritesList<String> favoritesList = new FavoritesList<>();
+        FavoritesArrayList<String> favoritesList = new FavoritesArrayList<>();
         favoritesList.access("google");
         favoritesList.access("baidu");
         favoritesList.access("sina");
