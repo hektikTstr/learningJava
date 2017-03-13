@@ -76,6 +76,11 @@ public class CircularlyResizableArrayList<E> implements List<E> {
     }
 
     @Override
+    public void add(E e) throws IndexOutOfBoundsException {
+        add(size, e);
+    }
+
+    @Override
     public E remove(int i) throws IndexOutOfBoundsException {
         checkIndex(i, size);
         E temp = data[(f + i) % data.length];

@@ -67,6 +67,11 @@ public class ArrayList<E> implements List<E>, Cloneable {
         size++;
     }
 
+    @Override
+    public void add(E e) throws IndexOutOfBoundsException {
+        add(size, e);
+    }
+
     // R-7.9
     public void addNewImplementation(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
