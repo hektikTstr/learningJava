@@ -1,6 +1,8 @@
 package com.company.trees;
 
 import com.company.list.Position;
+import javafx.geometry.Pos;
+import org.testng.annotations.Test;
 
 import java.util.Iterator;
 
@@ -59,16 +61,6 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return null;
-    }
-
-    @Override
-    public Iterable<Position<E>> positions() {
-        return null;
     }
 
     @Override
@@ -165,5 +157,60 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         node.setRight(null);
         node.setParent(node); // our convention for defunct node
         return temp;
+    }
+
+    // R-8.5
+    public static <E> int countLeftChildLeavesNum(BinaryTree<E> tree, Position<E> startPos) {
+        if (tree == null || startPos == null) {
+            throw new IllegalArgumentException();
+        }
+        int count = 0;
+        Position<E> posLeft = tree.left(startPos);
+        Position<E> posRight = tree.right(startPos);
+        if (posLeft == null && posRight == null) {
+            return 0;
+        }
+
+        Position<E> tempLeft;
+        Position<E> tempRight;
+        if (posLeft != null) {
+            tempLeft = tree.left(posLeft);
+            tempRight = tree.right(posLeft);
+            if (tempLeft == null && tempRight == null) {
+                count = 1;
+            } else {
+                count += countLeftChildLeavesNum(tree, posLeft);
+            }
+        }
+
+        if (posRight != null) {
+            tempLeft = tree.left(posRight);
+            tempRight = tree.right(posRight);
+            if (tempLeft != null || tempRight != null) {
+                count += countLeftChildLeavesNum(tree, posRight);
+            }
+        }
+
+        return count;
+    }
+
+    // R-8.5
+    @Test
+    public void test() {
+        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+        tree.addRoot(0);
+        Position<Integer> position1 = tree.addLeft(tree.root(), 1);
+        Position<Integer> position2 = tree.addRight(tree.root(), 2);
+        tree.addLeft(position1, 3);
+        position1 = tree.addRight(position1, 4);
+        position1 = tree.addRight(position1, 7);
+        tree.addLeft(position1, 8);
+        position1 = tree.addLeft(position2, 5);
+        position2 = tree.addRight(position2, 6);
+        tree.addLeft(position1, 9);
+        tree.addRight(position1, 10);
+        tree.addLeft(position2, 11);
+        tree.addRight(position2, 12);
+        int a = countLeftChildLeavesNum(tree, tree.root());
     }
 }
