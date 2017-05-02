@@ -53,5 +53,8 @@ public class Exercise {
         tree2.addRight(tempPos, 6);
 
         boolean isomorphic = isIsomorphic(tree1, tree1.root(), tree2, tree2.root());
+
+        int i = tree2.numChildrenRecursive(tree2.root());
+        tree2.pruneSubtree(tempPos);
     }
 }

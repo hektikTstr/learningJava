@@ -194,6 +194,23 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return count;
     }
 
+    // C-8.36
+    public void pruneSubtree(Position<E> position) {
+        if (position == root) {
+            root = null;
+            size = 0;
+            return;
+        }
+        Node<E> node = validate(position);
+        int num = numChildrenRecursive(position);
+        if (node.getParent().getLeft() == node) {
+            node.getParent().setLeft(null);
+        } else {
+            node.getParent().setRight(null);
+        }
+        size -= num + 1;
+    }
+
     // R-8.5
     @Test
     public void test() {

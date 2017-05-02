@@ -29,6 +29,21 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return count;
     }
 
+    public int numChildrenRecursive(Position<E> p) {
+        int count = 0;
+        Position<E> position = left(p);
+        if (position != null) {
+            count++;
+            count += numChildrenRecursive(position);
+        }
+        position = right(p);
+        if (position != null) {
+            count++;
+            count += numChildrenRecursive(position);
+        }
+        return count;
+    }
+
     @Override
     public Position<E> sibling(Position<E> p) throws IllegalArgumentException {
         Position<E> parent = parent(p);
