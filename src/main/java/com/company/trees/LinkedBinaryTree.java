@@ -199,6 +199,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     public void test() {
         LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
         tree.addRoot(0);
+        Position<Integer> pos = tree.parent(tree.root());
         Position<Integer> position1 = tree.addLeft(tree.root(), 1);
         Position<Integer> position2 = tree.addRight(tree.root(), 2);
         tree.addLeft(position1, 3);
