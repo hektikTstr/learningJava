@@ -45,16 +45,65 @@ public class Exercise {
         LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
         tree2.addRoot(1);
         tempPos = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p2 = tempPos;
         tree2.addLeft(tempPos, 4);
+        Position<Integer> p1 = tree2.root();
         tempPos = tree2.addRight(tempPos, 5);
         tree2.addRight(tempPos, 7);
         tree2.addLeft(tempPos, 8);
         tempPos = tree2.addLeft(tree2.root(), 3);
         tree2.addRight(tempPos, 6);
-
+        tree2.swap(p1, p2);
         boolean isomorphic = isIsomorphic(tree1, tree1.root(), tree2, tree2.root());
 
         int i = tree2.numChildrenRecursive(tree2.root());
         tree2.pruneSubtree(tempPos);
+    }
+
+    @Test
+    public void c_8_37_1() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p2 = tempPos;
+        tree2.addLeft(tempPos, 4);
+        Position<Integer> p1 = tree2.root();
+        tempPos = tree2.addRight(tempPos, 5);
+        tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos, 8);
+        tempPos = tree2.addLeft(tree2.root(), 3);
+        tree2.addRight(tempPos, 6);
+        tree2.swap(p1, p2);
+    }
+
+    @Test
+    public void c_8_37_2() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p2 = tempPos;
+        Position<Integer> p1 = tree2.addLeft(tempPos, 4);
+        tempPos = tree2.addRight(tempPos, 5);
+        tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos, 8);
+        tempPos = tree2.addLeft(tree2.root(), 3);
+        tree2.addRight(tempPos, 6);
+        tree2.swap(p1, p2);
+    }
+
+    @Test
+    public void c_8_37_3() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        tree2.addLeft(tempPos, 4);
+        tempPos = tree2.addRight(tempPos, 5);
+        Position<Integer> p2 = tempPos;
+        tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos, 8);
+        tempPos = tree2.addLeft(tree2.root(), 3);
+        Position<Integer> p1 = tempPos;
+        tree2.addRight(tempPos, 6);
+        tree2.swap(p1, p2);
     }
 }

@@ -44,7 +44,8 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             throw new IllegalArgumentException("Not valid position type");
         Node<E> node = (Node<E>) p; // safe cast
         if (node.getParent() == node) // our convention for defunct node
-            throw new IllegalArgumentException("p is no longer in the tree"); return node;
+            throw new IllegalArgumentException("p is no longer in the tree");
+        return node;
     }
 
     @Override
@@ -209,6 +210,96 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             node.getParent().setRight(null);
         }
         size -= num + 1;
+    }
+
+    // C-8.37
+    public void swap(Position<E> p1, Position<E> p2) {
+        Node<E> n1 = validate(p1);
+        Node<E> n2 = validate(p2);
+        Node<E> parent1 = n1.getParent();
+        Node<E> parent2 = n2.getParent();
+        if (n1 == root) {
+            root = n2;
+        } else if (n2 == root) {
+            root = n1;
+        }
+        if (parent1 == n2) {
+            switchAdjacentNode(n2, n1, parent2);
+        } else if (parent2 == n1) {
+            switchAdjacentNode(n1, n2, parent1);
+        } else {
+            // switch parents
+            n1.setParent(parent2);
+            if (parent1 != null) {
+                if (parent1.getLeft() == n1) {
+                    parent1.setLeft(n2);
+                } else {
+                    parent1.setRight(n2);
+                }
+            }
+            n2.setParent(parent1);
+            if (parent2 != null) {
+                if (parent2.getLeft() == n2) {
+                    parent2.setLeft(n1);
+                } else {
+                    parent2.setRight(n1);
+                }
+            }
+            // switch children
+            Node<E> tempNode1 = n1.getLeft();
+            Node<E> tempNode2 = n2.getLeft();
+            n1.setLeft(tempNode2);
+            if (tempNode2 != null) {
+                tempNode2.setParent(n1);
+            }
+            n2.setLeft(tempNode1);
+            if (tempNode1 != null) {
+                tempNode1.setParent(n2);
+            }
+            tempNode1 = n1.getRight();
+            tempNode2 = n2.getRight();
+            n1.setRight(tempNode2);
+            if (tempNode2 != null) {
+                tempNode2.setParent(n1);
+            }
+            n2.setRight(tempNode1);
+            if (tempNode1 != null) {
+                tempNode1.setParent(n2);
+            }
+        }
+    }
+
+    private void switchAdjacentNode(Node<E> n1, Node<E> n2, Node<E> parent1) {
+        Node<E> tempNode1;
+        Node<E> tempNode2;
+        n2.setParent(parent1);
+        n1.setParent(n2);
+        if (parent1 != null) {
+            if (parent1.getLeft() == n1) {
+                parent1.setLeft(n2);
+            } else {
+                parent1.setRight(n2);
+            }
+        }
+        tempNode1 = n2.getLeft();
+        tempNode2 = n2.getRight();
+        if (n1.getLeft() == n2) {
+            n2.setLeft(n1);
+            n2.setRight(n1.getRight());
+            n1.getRight().setParent(n2);
+        } else {
+            n2.setRight(n1);
+            n2.setLeft(n1.getLeft());
+            n1.getLeft().setParent(n2);
+        }
+        n1.setLeft(tempNode1);
+        n1.setRight(tempNode2);
+        if (tempNode1 != null) {
+            tempNode1.setParent(n1);
+        }
+        if (tempNode2 != null) {
+            tempNode2.setParent(n1);
+        }
     }
 
     // R-8.5
