@@ -81,6 +81,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         if (!isEmpty()) throw new IllegalStateException("Tree is not empty");
         root = createNode(e, null, null, null);
         size = 1;
+        sentinel = createNode(null, null, root, null);
         return root;
     }
 
@@ -131,6 +132,30 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
     }
 
+    // C-8.38
+    /** Attaches trees t1 and t2 as left and right subtrees of external p. */
+    public void attachSentinel(Position<E> p, LinkedBinaryTree<E> t1, LinkedBinaryTree<E> t2) throws IllegalArgumentException {
+        Node<E> node = validate(p);
+        if (isInternal(p)) throw new IllegalArgumentException("p must be a leaf");
+        size += t1.size() + t2.size();
+        if (!t1.isEmpty()) {
+            t1.root.setParent(node);
+            node.setLeft(t1.root);
+            t1.root = null;
+            t1.size = 0;
+        } else {
+            node.setLeft(new Node<E>(null, node, null, null));
+        }
+        if (!t2.isEmpty()) {
+            t2.root.setParent(node);
+            node.setLeft(t2.root);
+            t2.root = null;
+            t2.size = 0;
+        } else {
+            node.setRight(new Node<E>(null, node, null, null));
+        }
+    }
+
     /** Removes the node at Position p and replaces it with its child, if any. */
     public E remove(Position<E> p) throws IllegalArgumentException {
         Node<E> node = validate(p);
@@ -143,6 +168,39 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
         if (node == root) {
             root = child;
+        } else {
+            Node<E> parent = node.getParent();
+            if (node == parent.getLeft()) {
+                parent.setLeft(child);
+            } else {
+                parent.setRight(child);
+            }
+        }
+        size--;
+        E temp = node.getElement();
+        node.setElement(null);
+        node.setLeft(null);
+        node.setRight(null);
+        node.setParent(node); // our convention for defunct node
+        return temp;
+    }
+
+    private Node<E> sentinel;
+    /** Removes the node at Position p and replaces it with its child, if any. */
+    public E removeNodeSentinel(Position<E> p) throws IllegalArgumentException {
+        Node<E> node = validate(p);
+        if (numChildren(p) == 2) {
+            throw new IllegalArgumentException("p has two children");
+        }
+        Node<E> child = (node.getLeft() != null ? node.getLeft() : node.getRight());
+        if (child != null) {
+            child.setParent(node.getParent());
+        } else {
+            child = new Node<E>(null, node.getParent(), null, null);
+        }
+        if (node == root) {
+            root = child;
+            sentinel.setLeft(root);
         } else {
             Node<E> parent = node.getParent();
             if (node == parent.getLeft()) {
