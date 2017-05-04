@@ -106,4 +106,17 @@ public class Exercise {
         tree2.addRight(tempPos, 6);
         tree2.swap(p1, p2);
     }
+
+    @Test
+    public void c_8_39() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        tree2.addLeft(tempPos, 4);
+        tempPos = tree2.addRight(tempPos, 5);
+        tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos, 8);
+        tree2.addLeft(tree2.root(), 3);
+        LinkedBinaryTree<Integer> newTree = tree2.clone();
+    }
 }

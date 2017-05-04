@@ -126,7 +126,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
         if (!t2.isEmpty()) {
             t2.root.setParent(node);
-            node.setLeft(t2.root);
+            node.setRight(t2.root);
             t2.root = null;
             t2.size = 0;
         }
@@ -360,6 +360,26 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
     }
 
+    // C-8.39
+    public LinkedBinaryTree<E> clone() {
+        LinkedBinaryTree<E> newTree = new LinkedBinaryTree<E>();
+        newTree.addRoot(root.getElement());
+        recursiveClone(root, newTree.root, newTree);
+        return newTree;
+    }
+
+    private void recursiveClone(Position<E> orig, Position<E> dest, LinkedBinaryTree<E> destTree) {
+        Node<E> destNode = validate(dest);
+        if (left(orig) != null) {
+            LinkedBinaryTree<E> newTree1 = new LinkedBinaryTree<>();
+            newTree1.addRoot(left(orig).getElement());
+            LinkedBinaryTree<E> newTree2 = new LinkedBinaryTree<>();
+            newTree2.addRoot(right(orig).getElement());
+            destTree.attach(dest, newTree1, newTree2);
+            recursiveClone(left(orig), destNode.getLeft(), destTree);
+            recursiveClone(right(orig), destNode.getRight(), destTree);
+        }
+    }
     // R-8.5
     @Test
     public void test() {
