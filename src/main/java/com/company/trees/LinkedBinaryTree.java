@@ -1,10 +1,7 @@
 package com.company.trees;
 
 import com.company.list.Position;
-import javafx.geometry.Pos;
 import org.testng.annotations.Test;
-
-import java.util.Iterator;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     protected static class Node<E> implements Position<E> {
@@ -361,14 +358,14 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     // C-8.39
-    public LinkedBinaryTree<E> clone() {
+    public LinkedBinaryTree<E> cloneByAttach() {
         LinkedBinaryTree<E> newTree = new LinkedBinaryTree<E>();
         newTree.addRoot(root.getElement());
-        recursiveClone(root, newTree.root, newTree);
+        recursiveCloneWithAttatch(root, newTree.root, newTree);
         return newTree;
     }
 
-    private void recursiveClone(Position<E> orig, Position<E> dest, LinkedBinaryTree<E> destTree) {
+    private void recursiveCloneWithAttatch(Position<E> orig, Position<E> dest, LinkedBinaryTree<E> destTree) {
         Node<E> destNode = validate(dest);
         if (left(orig) != null) {
             LinkedBinaryTree<E> newTree1 = new LinkedBinaryTree<>();
@@ -376,10 +373,32 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             LinkedBinaryTree<E> newTree2 = new LinkedBinaryTree<>();
             newTree2.addRoot(right(orig).getElement());
             destTree.attach(dest, newTree1, newTree2);
-            recursiveClone(left(orig), destNode.getLeft(), destTree);
-            recursiveClone(right(orig), destNode.getRight(), destTree);
+            recursiveCloneWithAttatch(left(orig), destNode.getLeft(), destTree);
+            recursiveCloneWithAttatch(right(orig), destNode.getRight(), destTree);
         }
     }
+
+    // C-8.40
+    public LinkedBinaryTree<E> clone() {
+        LinkedBinaryTree<E> newTree = new LinkedBinaryTree<>();
+        newTree.addRoot(root.getElement());
+        recursiveClone(root, newTree.root, newTree);
+        return newTree;
+    }
+
+    private void recursiveClone(Position<E> orig, Position<E> dest, LinkedBinaryTree<E> destTree) {
+        Node<E> origNode = validate(orig);
+        Node<E> destNode = validate(dest);
+        if (origNode.getLeft() != null) {
+            destTree.addLeft(destNode, origNode.getLeft().getElement());
+            recursiveClone(origNode.getLeft(), destNode.getLeft(), destTree);
+        }
+        if (origNode.getRight() != null) {
+            destTree.addRight(destNode, origNode.getRight().getElement());
+            recursiveClone(origNode.getRight(), destNode.getRight(), destTree);
+        }
+    }
+
     // R-8.5
     @Test
     public void test() {
