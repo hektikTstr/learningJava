@@ -138,6 +138,12 @@ public class Exercise {
         tree2.printAllNodesDepth(tree2.root(), 0);
     }
 
+    @Test
+    public void c_8_44() {
+        LinkedBinaryTree<Integer> tree2 = createProperTree();
+        tree2.printBalanceFactor(tree2.root(), 0);
+    }
+
     private LinkedBinaryTree<Integer> createTree() {
         LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
         tree2.addRoot(1);
@@ -151,4 +157,19 @@ public class Exercise {
         return tree2;
     }
 
+    private LinkedBinaryTree<Integer> createProperTree() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        tree2.addLeft(tempPos, 4);
+        tempPos = tree2.addRight(tempPos, 5);
+        Position<Integer> tempPos1 = tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos1, 11);
+        tree2.addRight(tempPos1, 12);
+        tree2.addLeft(tempPos, 8);
+        tempPos = tree2.addLeft(tree2.root(), 3);
+//        tree2.addRight(tempPos, 6);
+//        tree2.addLeft(tempPos, 10);
+        return tree2;
+    }
 }

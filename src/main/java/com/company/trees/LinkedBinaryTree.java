@@ -1,6 +1,7 @@
 package com.company.trees;
 
 import com.company.list.Position;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Cloneable {
@@ -397,6 +398,20 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Clonea
             destTree.addRight(destNode, origNode.getRight().getElement());
             recursiveClone(origNode.getRight(), destNode.getRight(), destTree);
         }
+    }
+
+    public int printBalanceFactor(Position<E> p, int depth) {
+        validate(p);
+        int h = 0;
+        String spaces = StringUtils.repeat(" ", depth);
+        System.out.println(spaces + "p = " + p.getElement());
+        if (isInternal(p)) {
+            int heightL = printBalanceFactor(left(p), depth + 1);
+            int heightR = printBalanceFactor(right(p), depth + 1);
+            System.out.println(spaces + "heightL - heightR = " + (heightL - heightR));
+            h = Math.max(heightL, heightR) + 1;
+        }
+        return h;
     }
 
     // R-8.5
