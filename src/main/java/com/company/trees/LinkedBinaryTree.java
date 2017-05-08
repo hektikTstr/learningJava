@@ -3,7 +3,7 @@ package com.company.trees;
 import com.company.list.Position;
 import org.testng.annotations.Test;
 
-public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
+public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Cloneable {
     protected static class Node<E> implements Position<E> {
         private E element;
         private Node<E> parent;

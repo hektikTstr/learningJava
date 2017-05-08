@@ -5,6 +5,7 @@ import com.company.list.List;
 import com.company.list.Position;
 import com.company.queue.LinkedQueue;
 import com.company.queue.Queue;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
 
@@ -49,6 +50,26 @@ public abstract class AbstractTree<E> implements Tree<E> {
             h = Math.max(h, 1 + height(c));
         }
         return h;
+    }
+
+    public int printElementAndSubtreeHeight(Position<E> p, int depth) {
+        int h = 0;
+        String spaces = StringUtils.repeat(" ", depth);
+        System.out.println(spaces + "p = " + p.getElement());
+        for (Position<E> c : children(p)) {
+            int height = printElementAndSubtreeHeight(c, depth + 1);
+            System.out.println(spaces + "subtree height = " + height);
+            h = Math.max(h, 1 + height);
+        }
+        return h;
+    }
+
+    public void printAllNodesDepth(Position<E> p, int currentDepth) {
+        System.out.println("p = " + p.getElement());
+        System.out.println("depth = " + currentDepth);
+        for (Position<E> c : children(p)) {
+            printAllNodesDepth(c, currentDepth + 1);
+        }
     }
 
     /** This class adapts the iteration produced by positions() to return elements. */
