@@ -403,7 +403,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Clonea
     public int printBalanceFactor(Position<E> p, int depth) {
         validate(p);
         int h = 0;
-        String spaces = StringUtils.repeat(" ", depth);
+        String spaces = StringUtils.repeat("  ", depth);
         System.out.println(spaces + "p = " + p.getElement());
         if (isInternal(p)) {
             int heightL = printBalanceFactor(left(p), depth + 1);

@@ -55,6 +55,73 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         }
     }
 
+    @Override
+    public Position<E> preorderNext(Position<E> p) throws IllegalArgumentException {
+        if (left(p) != null) {
+            return left(p);
+        }
+        if (right(p) != null) {
+            return right(p);
+        }
+        while (p != null) {
+            Position<E> parent = parent(p);
+            if (parent == null) {
+                return null;
+            }
+            if (p == left(parent)) {
+                if (right(parent) != null) {
+                    return right(parent);
+                } else {
+                    p = parent(p);
+                }
+            } else if (p == right(parent)) {
+                p = parent;
+            } else {
+                assert false;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Position<E> inorderNext(Position<E> p) throws IllegalArgumentException {
+        Position<E> tempNode = p;
+        while (left(tempNode) != null) {
+            tempNode = left(tempNode);
+        }
+        if (tempNode != p) {
+            return tempNode;
+        }
+        if (right(tempNode) != null) {
+            if (isInternal(right(tempNode))) {
+                tempNode = inorderNext(right(tempNode));
+            } else {
+                return right(tempNode);
+            }
+        }
+        if (tempNode != p) {
+            return tempNode;
+        }
+        while (tempNode != null) {
+            Position<E> parent = parent(tempNode);
+            if (parent == null) {
+                return null;
+            }
+            if (tempNode == left(parent) && (right(parent) != null)) {
+                return inorderNext(right(parent));
+            }
+            if (tempNode == right(parent)) {
+                tempNode = parent;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Position<E> postorderNext(Position<E> p) throws IllegalArgumentException {
+        return null;
+    }
+
     private void inorderSubtree(Position<E> p, List<Position<E>> snapshot) {
         if (left(p) != null) {
             inorderSubtree(left(p), snapshot);

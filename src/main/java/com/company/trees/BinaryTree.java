@@ -10,4 +10,7 @@ public interface BinaryTree<E> extends Tree<E> {
     Position<E> right(Position<E> p) throws IllegalArgumentException;
     /** Returns the Position of p's sibling (or null if no sibling exists). */
     Position<E> sibling(Position<E> p) throws IllegalArgumentException;
+    Position<E> preorderNext(Position<E> p) throws IllegalArgumentException;
+    Position<E> inorderNext(Position<E> p) throws IllegalArgumentException;
+    Position<E> postorderNext(Position<E> p) throws IllegalArgumentException;
 }

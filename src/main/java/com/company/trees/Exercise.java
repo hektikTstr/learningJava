@@ -144,6 +144,25 @@ public class Exercise {
         tree2.printBalanceFactor(tree2.root(), 0);
     }
 
+    @Test
+    public void c_8_45() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        tree2.addRoot(1);
+        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p = tempPos;
+        tree2.addLeft(tempPos, 4);
+        tempPos = tree2.addRight(tempPos, 5);
+        tree2.addRight(tempPos, 7);
+        tree2.addLeft(tempPos, 8);
+        p = tree2.inorderNext(p);
+        tempPos = tree2.addLeft(tree2.root(), 3);
+        p = tempPos;
+        tempPos = tree2.addRight(tempPos, 6);
+        p = tree2.inorderNext(p);
+        tree2.preorderNext(tempPos);
+        tempPos = tree2.inorderNext(tempPos);
+    }
+
     private LinkedBinaryTree<Integer> createTree() {
         LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
         tree2.addRoot(1);
