@@ -147,23 +147,24 @@ public class Exercise {
     @Test
     public void c_8_45() {
         LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
-        tree2.addRoot(1);
-        Position<Integer> tempPos = tree2.addRight(tree2.root(), 2);
-        Position<Integer> p = tempPos;
-        tree2.addLeft(tempPos, 4);
-        tempPos = tree2.addRight(tempPos, 5);
-        Position<Integer> p1 = tree2.addRight(tempPos, 7);
-        Position<Integer> p2 = tree2.addLeft(tempPos, 8);
-        p = tree2.inorderNext(p);
-        tempPos = tree2.addLeft(tree2.root(), 3);
-        p = tempPos;
-        tempPos = tree2.addRight(tempPos, 6);
-        p = tree2.inorderNext(p);
-        p = tree2.inorderNext(tempPos);
-        tree2.preorderNext(tempPos);
-        tempPos = tree2.inorderNext(tempPos);
+        Position<Integer> p1 = tree2.addRoot(1);
+        Position<Integer> p2 = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p4 = tree2.addLeft(p2, 4);
+        Position<Integer> p5 = tree2.addRight(p2, 5);
+        Position<Integer> p7 = tree2.addRight(p5, 7);
+        Position<Integer> p8 = tree2.addLeft(p5, 8);
+        Position<Integer> p3 = tree2.addLeft(tree2.root(), 3);
+        Position<Integer> p6 = tree2.addRight(p3, 6);
+        Position<Integer> tempPos;
         tempPos = tree2.inorderNext(p1);
         tempPos = tree2.inorderNext(p2);
+        tempPos = tree2.inorderNext(p3);
+        tempPos = tree2.inorderNext(p4);
+        tempPos = tree2.inorderNext(p5);
+        tempPos = tree2.inorderNext(p6);
+        tempPos = tree2.inorderNext(p7);
+        tempPos = tree2.inorderNext(p8);
+        tree2.preorderNext(tempPos);
     }
 
     private LinkedBinaryTree<Integer> createTree() {

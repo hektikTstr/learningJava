@@ -83,8 +83,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return null;
     }
 
-    @Override
-    public Position<E> inorderNext(Position<E> p) throws IllegalArgumentException {
+    public Position<E> inorderNextBad(Position<E> p) throws IllegalArgumentException {
         Position<E> tempNode = p;
         while (left(tempNode) != null) {
             tempNode = left(tempNode);
@@ -114,6 +113,31 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
             }
             if (tempNode == right(parent)) {
                 tempNode = parent;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Position<E> inorderNext(Position<E> p) throws IllegalArgumentException {
+        Position<E> tempNode = right(p);
+        if (tempNode != null) {
+            while (left(tempNode) != null) {
+                tempNode = left(tempNode);
+            }
+            return tempNode;
+        } else {
+            while (p != null) {
+                Position<E> parent = parent(p);
+                if (parent == null) {
+                    break;
+                }
+                if (left(parent) == p) {
+                    return parent;
+                }
+                if (right(parent) == p) {
+                    p = parent;
+                }
             }
         }
         return null;
