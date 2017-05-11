@@ -94,13 +94,10 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         }
         if (right(tempNode) != null) {
             if (isInternal(right(tempNode))) {
-                tempNode = inorderNext(right(tempNode));
+                return inorderNext(right(tempNode));
             } else {
                 return right(tempNode);
             }
-        }
-        if (tempNode != p) {
-            return tempNode;
         }
         while (tempNode != null) {
             Position<E> parent = parent(tempNode);
@@ -108,7 +105,12 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
                 return null;
             }
             if (tempNode == left(parent) && (right(parent) != null)) {
-                return inorderNext(right(parent));
+                if (isInternal(right(parent))) {
+                    return inorderNext(right(parent));
+                } else {
+                    return right(parent);
+                }
+//                return inorderNext(right(parent));
             }
             if (tempNode == right(parent)) {
                 tempNode = parent;

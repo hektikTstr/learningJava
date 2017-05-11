@@ -152,15 +152,18 @@ public class Exercise {
         Position<Integer> p = tempPos;
         tree2.addLeft(tempPos, 4);
         tempPos = tree2.addRight(tempPos, 5);
-        tree2.addRight(tempPos, 7);
-        tree2.addLeft(tempPos, 8);
+        Position<Integer> p1 = tree2.addRight(tempPos, 7);
+        Position<Integer> p2 = tree2.addLeft(tempPos, 8);
         p = tree2.inorderNext(p);
         tempPos = tree2.addLeft(tree2.root(), 3);
         p = tempPos;
         tempPos = tree2.addRight(tempPos, 6);
         p = tree2.inorderNext(p);
+        p = tree2.inorderNext(tempPos);
         tree2.preorderNext(tempPos);
         tempPos = tree2.inorderNext(tempPos);
+        tempPos = tree2.inorderNext(p1);
+        tempPos = tree2.inorderNext(p2);
     }
 
     private LinkedBinaryTree<Integer> createTree() {
