@@ -3,6 +3,7 @@ package com.company.trees;
 import com.company.list.ArrayList;
 import com.company.list.List;
 import com.company.list.Position;
+import javafx.geometry.Pos;
 
 public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTree<E> {
     @Override
@@ -145,6 +146,27 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
 
     @Override
     public Position<E> postorderNext(Position<E> p) throws IllegalArgumentException {
+        Position<E> parent = parent(p);
+        if (parent == null) {
+            return null;
+        }
+        if (right(parent) == p) {
+            return parent;
+        }
+        if (left(parent) == p) {
+            Position<E> tempNode = right(parent);
+            if (tempNode == null) {
+                return parent;
+            }
+            while (true) {
+                while (left(tempNode) != null) {
+                    tempNode = left(tempNode);
+                }
+                if (right(tempNode) == null) {
+                    return tempNode;
+                }
+            }
+        }
         return null;
     }
 

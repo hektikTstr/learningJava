@@ -164,6 +164,14 @@ public class Exercise {
         tempPos = tree2.inorderNext(p6);
         tempPos = tree2.inorderNext(p7);
         tempPos = tree2.inorderNext(p8);
+        tempPos = tree2.postorderNext(p1);
+        tempPos = tree2.postorderNext(p2);
+        tempPos = tree2.postorderNext(p3);
+        tempPos = tree2.postorderNext(p4);
+        tempPos = tree2.postorderNext(p5);
+        tempPos = tree2.postorderNext(p6);
+        tempPos = tree2.postorderNext(p7);
+        tempPos = tree2.postorderNext(p8);
         tree2.preorderNext(tempPos);
     }
 
