@@ -175,6 +175,23 @@ public class Exercise {
         tree2.preorderNext(tempPos);
     }
 
+    @Test
+    public void c_8_46() {
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        Position<Integer> p1 = tree2.addRoot(1);
+        Position<Integer> p2 = tree2.addRight(tree2.root(), 2);
+        Position<Integer> p4 = tree2.addLeft(p2, 4);
+        Position<Integer> p5 = tree2.addRight(p2, 5);
+        Position<Integer> p7 = tree2.addRight(p5, 7);
+        Position<Integer> p8 = tree2.addLeft(p5, 8);
+        Position<Integer> p9 = tree2.addLeft(p8, 9);
+        Position<Integer> p11 = tree2.addLeft(p9, 11);
+        Position<Integer> p10 = tree2.addRight(p8, 10);
+        Position<Integer> p3 = tree2.addLeft(tree2.root(), 3);
+        Position<Integer> p6 = tree2.addRight(p3, 6);
+        tree2.inorderLoop();
+    }
+
     private LinkedBinaryTree<Integer> createTree() {
         LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
         tree2.addRoot(1);

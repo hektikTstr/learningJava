@@ -188,6 +188,40 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return snapshot;
     }
 
+    public void inorderLoop() {
+        Position<E> p = root();
+        while (true) {
+            while (left(p) != null) {
+                p = left(p);
+            }
+            System.out.println(p.getElement());
+            if (right(p) != null) {
+                p = right(p);
+            }
+            else {
+                Position<E> parent = parent(p);
+                while (parent != null) {
+                    if (left(parent) == p) {
+                        System.out.println(parent.getElement());
+                        if (right(parent) != null) {
+                            p = right(parent);
+                            break;
+                        } else {
+                            p = parent;
+                        }
+                    }
+                    if (right(parent) == p) {
+                        p = parent;
+                        if (p == root()) {
+                            return;
+                        }
+                    }
+                    parent = parent(p);
+                }
+            }
+        }
+    }
+
     public Iterable<Position<E>> positions() {
         return inorder();
     }
