@@ -5,6 +5,8 @@ import com.company.list.List;
 import com.company.list.Position;
 import javafx.geometry.Pos;
 
+import java.util.Iterator;
+
 public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTree<E> {
     @Override
     public Iterable<Position<E>> children(Position<E> p) throws IllegalArgumentException {
@@ -84,39 +86,25 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return null;
     }
 
-    public Position<E> inorderNextBad(Position<E> p) throws IllegalArgumentException {
-        Position<E> tempNode = p;
-        while (left(tempNode) != null) {
-            tempNode = left(tempNode);
+    private class InorderNext implements NextTreePosition<E> {
+        @Override
+        public Position<E> next(Position<E> position) {
+            return inorderNext(position);
         }
-        if (tempNode != p) {
-            return tempNode;
+
+        @Override
+        public Position<E> startNode() {
+            Position<E> p = root();
+            while (left(p) != null) {
+                p = left(p);
+            }
+            return p;
         }
-        if (right(tempNode) != null) {
-            if (isInternal(right(tempNode))) {
-                return inorderNext(right(tempNode));
-            } else {
-                return right(tempNode);
-            }
-        }
-        while (tempNode != null) {
-            Position<E> parent = parent(tempNode);
-            if (parent == null) {
-                return null;
-            }
-            if (tempNode == left(parent) && (right(parent) != null)) {
-                if (isInternal(right(parent))) {
-                    return inorderNext(right(parent));
-                } else {
-                    return right(parent);
-                }
-//                return inorderNext(right(parent));
-            }
-            if (tempNode == right(parent)) {
-                tempNode = parent;
-            }
-        }
-        return null;
+    }
+
+    // C-8.49
+    Iterable<Position<E>> inorderLazy() {
+        return new AbstractTreeIterable(new InorderNext());
     }
 
     @Override

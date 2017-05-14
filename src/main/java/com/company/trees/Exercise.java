@@ -178,9 +178,19 @@ public class Exercise {
         tempPos = tree2.postorderNext(p6);
         tempPos = tree2.postorderNext(p7);
         tempPos = tree2.postorderNext(p4);
-        Iterable<Position<Integer>> iterable = tree2.postorderLazy();
-        iterable.iterator().hasNext();
-        iterable.iterator().next();
+        Iterable<Position<Integer>> iterable = tree2.inorderLazy();
+        Iterator<Position<Integer>> iterator = iterable.iterator();
+        iterator.hasNext();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
         tree2.preorderNext(tempPos);
     }
 

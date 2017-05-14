@@ -122,6 +122,7 @@ public abstract class AbstractTree<E> implements Tree<E> {
     public Iterable<Position<E>> preorderLazy() {
         return new AbstractTreeIterable(new PreorderNext());
     }
+
     // C-8.48
     public Iterable<Position<E>> postorderLazy() {
         return new AbstractTreeIterable(new PostorderNext());
@@ -164,7 +165,7 @@ public abstract class AbstractTree<E> implements Tree<E> {
         }
     }
 
-    private interface NextTreePosition<E> {
+    protected interface NextTreePosition<E> {
         Position<E> next(Position<E> position);
         Position<E> startNode();
     }
@@ -180,7 +181,6 @@ public abstract class AbstractTree<E> implements Tree<E> {
             return root();
         }
     }
-
 
     private class PostorderNext implements NextTreePosition<E> {
         @Override
