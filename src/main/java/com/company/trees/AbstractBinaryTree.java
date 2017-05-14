@@ -165,6 +165,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
                 if (right(tempNode) == null) {
                     return tempNode;
                 }
+                tempNode = right(tempNode);
             }
         }
         return null;

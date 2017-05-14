@@ -3,6 +3,8 @@ package com.company.trees;
 import com.company.list.Position;
 import org.testng.annotations.Test;
 
+import java.util.Iterator;
+
 public class Exercise {
 
     private <E> boolean isIsomorphic(LinkedBinaryTree<E> t1, Position<E> n1, LinkedBinaryTree<E> t2, Position<E> n2) {
@@ -153,6 +155,10 @@ public class Exercise {
         Position<Integer> p5 = tree2.addRight(p2, 5);
         Position<Integer> p7 = tree2.addRight(p5, 7);
         Position<Integer> p8 = tree2.addLeft(p5, 8);
+        Position<Integer> p9 = tree2.addLeft(p8, 9);
+        Position<Integer> p10 = tree2.addRight(p9, 10);
+        Position<Integer> p11 = tree2.addLeft(p10, 11);
+        Position<Integer> p12 = tree2.addRight(p11, 12);
         Position<Integer> p3 = tree2.addLeft(tree2.root(), 3);
         Position<Integer> p6 = tree2.addRight(p3, 6);
         Position<Integer> tempPos;
@@ -171,7 +177,10 @@ public class Exercise {
         tempPos = tree2.postorderNext(p5);
         tempPos = tree2.postorderNext(p6);
         tempPos = tree2.postorderNext(p7);
-        tempPos = tree2.postorderNext(p8);
+        tempPos = tree2.postorderNext(p4);
+        Iterable<Position<Integer>> iterable = tree2.postorderLazy();
+        iterable.iterator().hasNext();
+        iterable.iterator().next();
         tree2.preorderNext(tempPos);
     }
 
