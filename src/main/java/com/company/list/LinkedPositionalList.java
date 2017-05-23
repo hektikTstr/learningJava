@@ -164,7 +164,8 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         successor.setPrev(predecessor);
         size--;
         E answer = node.getElement();
-        node.setElement(null); node.setNext(null);
+        node.setElement(null);
+        node.setNext(null);
         node.setPrev(null);
         return answer;
     }

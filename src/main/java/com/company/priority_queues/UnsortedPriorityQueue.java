@@ -36,6 +36,7 @@ public class UnsortedPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
         return small;
     }
 
+    private Entry<K, V> minEntry;
     /**
      * Inserts a key-value pair and returns the entry created.
      */
@@ -43,6 +44,11 @@ public class UnsortedPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
         checkKey(key); // auxiliary key-checking method (could throw exception)
         Entry<K, V> newest = new PQEntry<>(key, value);
         list.addLast(newest);
+        if (list.isEmpty()) {
+            minEntry = newest;
+        } else if (compare(newest, minEntry) < 0) {
+            minEntry = newest;
+        }
         return newest;
     }
 
@@ -52,6 +58,10 @@ public class UnsortedPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
     public Entry<K, V> min() {
         if (list.isEmpty()) return null;
         return findMin().getElement();
+    }
+
+    public Entry<K, V> min_O1() {
+        return minEntry;
     }
 
     /**

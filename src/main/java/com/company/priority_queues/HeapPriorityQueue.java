@@ -5,7 +5,7 @@ import com.company.list.ArrayList;
 import java.util.Comparator;
 
 public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
-    protected ArrayList<Entry<K,V>> heap = new ArrayList<>();
+    protected ArrayList<Entry<K, V>> heap = new ArrayList<>();
 
     public HeapPriorityQueue() { super(); }
 

@@ -16,12 +16,12 @@ public abstract class AbstractPriorityQueue<K, V> implements PriorityQueue<K, V>
 
         @Override
         public K getKey() {
-            return null;
+            return k;
         }
 
         @Override
         public V getValue() {
-            return null;
+            return v;
         }
 
         protected void setKey(K key) {
@@ -45,7 +45,7 @@ public abstract class AbstractPriorityQueue<K, V> implements PriorityQueue<K, V>
 
     protected boolean checkKey(K key) throws IllegalArgumentException {
         try {
-            return (comp.compare(key,key) == 0); // see if key can be compared to itself
+            return (comp.compare(key, key) == 0); // see if key can be compared to itself
         } catch (ClassCastException e) {
             throw new IllegalArgumentException("Incompatible key");
         }
@@ -53,7 +53,7 @@ public abstract class AbstractPriorityQueue<K, V> implements PriorityQueue<K, V>
 
     public boolean isEmpty() { return size() == 0; }
 
-    public static <E> void pqSort(PositionalList<E> S, PriorityQueue<E,?> P) {
+    public static <E> void pqSort(PositionalList<E> S, PriorityQueue<E, ?> P) {
         int n = S.size();
         for (int j = 0; j < n; j++) {
             E element = S.remove(S.first());
