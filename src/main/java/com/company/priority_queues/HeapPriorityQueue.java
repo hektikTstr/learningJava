@@ -1,6 +1,7 @@
 package com.company.priority_queues;
 
 import com.company.list.ArrayList;
+import com.company.list.List;
 
 import java.util.Comparator;
 
@@ -87,5 +88,25 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         heap.remove(heap.size() - 1); // and remove it from the list;
         downheap(0); // then fix new root
         return answer;
+    }
+
+    private void recursivelyCompare(K num, int pos, List<K> list) {
+        if (compare(heap.get(pos), new PQEntry<>(num, null)) < 0) {
+            list.add(heap.get(pos).getKey());
+            if (hasLeft(pos)) {
+                recursivelyCompare(num, left(pos), list);
+            }
+            if (hasRight(pos)) {
+                recursivelyCompare(num, right(pos), list);
+            }
+        } else if (compare(heap.get(pos), new PQEntry<>(num, null)) == 0) {
+            list.add(heap.get(pos).getKey());
+        }
+    }
+
+    public List<K> getAllKeysLessThanOrEqualTo(K key) {
+        List<K> list = new ArrayList<>();
+        recursivelyCompare(key, 0, list);
+        return list;
     }
 }
