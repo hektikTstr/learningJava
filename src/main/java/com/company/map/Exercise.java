@@ -2,7 +2,9 @@ package com.company.map;
 
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 //Exercise3: (INFO1105 and INFO1905)
 public class Exercise {
@@ -136,5 +138,35 @@ public class Exercise {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = new Random().nextInt(10000000);
         }
+    }
+
+    class Foo<Bar> {
+        Bar[] bars = (Bar[])new Object[5];
+        public Bar get(int i) {
+            return bars[i];
+        }
+        public void set(int i, Bar x) {
+            bars[i] = x;
+        }
+        public Bar[] getArray() {
+            return bars;
+        }
+    }
+
+    @Test
+    public void test1() {
+        Foo<String> a = new Foo<>();
+        a.set(0, "abc");
+        System.out.println(a.get(0));
+        String[] b = (String[]) new Object[5];
+//        String[] b = a.getArray();
+    }
+
+    @Test
+    public void testResize() {
+        Map<String, Integer> map = new ChainHashMap<>();
+        map.put("a", 1);
+        map.put("b", 2);
+        map.put("c", 3);
     }
 }
