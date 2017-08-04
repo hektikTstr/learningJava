@@ -133,7 +133,7 @@ public class SinglyLinkedList<T> implements Cloneable {
             newList.tail = cur;
         }
 //
-//        Node<T> temp = this.head;
+//        TreeNode<T> temp = this.head;
 //        for (int i = 0; i < size(); i++) {
 //            newList.addLast(temp.getElement());
 //            temp = temp.getNext();
