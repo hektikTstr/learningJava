@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 //import java.lang.IllegalArgumentException;
 
-public class AdjacencyMapGraph<V, E> implements Graph<V, E> {
+public class EdgeListGraph<V, E> implements Graph<V, E> {
     private class VertexImpl<V> implements Vertex<V> {
         private V element;
         private Map<Vertex<V>, Edge<E>> outgoing, incoming;
