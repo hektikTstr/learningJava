@@ -1,31 +1,23 @@
-import java.util.Map;
-import java.util.HashMap;
+package com.company.graph;
+
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 //import java.lang.IllegalArgumentException;
 
 public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     private class VertexImpl<V> implements Vertex<V> {
         private V element;
-        private Map<Vertex<V>, Edge<E>> outgoing, incoming;
 
-        public VertexImpl(V element, boolean isDirected) {
+        public VertexImpl(V element) {
             this.element = element;
-            outgoing = new HashMap<Vertex<V>, Edge<E>>();
-            incoming = isDirected ? new HashMap<Vertex<V>, Edge<E>>() : outgoing;
         }
         public V getElement() {
             return element;
         }
         public boolean validate(Graph<V,E> graph) {
-            return (AdjacencyMapGraph.this == graph);
-        }
-        public Map<Vertex<V>, Edge<E>> getOutgoing() {
-            return outgoing;
-        }
-        public Map<Vertex<V>, Edge<E>> getIncoming() {
-            return incoming;
-        }        
+            return (AdjacencyMatrixGraph.this == graph);
+        }   
     }
 
     private class EdgeImpl<E> implements Edge<E> {
@@ -43,15 +35,16 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
             return endpoints;
         }
         public boolean validate(Graph<V, E> graph) {
-            return (AdjacencyMapGraph.this == graph);
+            return (AdjacencyMatrixGraph.this == graph);
         }
     }
 
     private boolean isDirected;
     private List<Vertex<V>> vertices = new LinkedList<>();
     private List<Edge<E>> edges = new LinkedList<>();
+    private Edge<E>[][] matrix;
 
-    public AdjacencyMapGraph(boolean isDirected) {
+    public AdjacencyMatrixGraph(boolean isDirected) {
         this.isDirected = isDirected;
     }
     @SuppressWarnings({"unchecked"})
@@ -82,23 +75,57 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     }
     public int outDegree(Vertex<V> v) throws IllegalArgumentException {
         VertexImpl<V> vert = validate(v);
-        return vert.getOutgoing().size();
+        int counter = 0;
+        int index = vertices.indexOf(v);
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[index][i] != null) {
+                counter++; 
+            }
+        }
+        return counter;
     }
     public int inDegree(Vertex<V> v) throws IllegalArgumentException {
         VertexImpl<V> vert = validate(v);
-        return vert.getIncoming().size();
+        int counter = 0;
+        int index = vertices.indexOf(v);
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][index] != null) {
+                counter++; 
+            }
+        }
+        return counter;
     }
     public Iterable<Edge<E>> outgoingEdges(Vertex<V> v) throws IllegalArgumentException {
         VertexImpl<V> vert = validate(v);
-        return vert.getOutgoing().values();
+        List<Edge<E>> list = new ArrayList<>();
+        int index = vertices.indexOf(v);
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[index][i] != null) {
+                list.add(matrix[index][i]);
+            }
+        }
+        return list;
     }
     public Iterable<Edge<E>> incomingEdges(Vertex<V> v) throws IllegalArgumentException {
         VertexImpl<V> vert = validate(v);
-        return vert.getIncoming().values();
+        List<Edge<E>> list = new ArrayList<>();
+        int index = vertices.indexOf(v);
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][index] != null) {
+                list.add(matrix[i][index]);
+            }
+        }
+        return list;
     }
     public Edge<E> getEdge(Vertex<V> u, Vertex<V> v) throws IllegalArgumentException {
-        VertexImpl<V> vert = validate(u);
-        return vert.getOutgoing().get(v);
+        VertexImpl<V> vertU = validate(u);
+        VertexImpl<V> vertV = validate(v);
+        int indexU = vertices.indexOf(u);
+        int indexV = vertices.indexOf(v);
+        if (indexU == -1 || indexV == -1) {
+            return null;
+        }
+        return matrix[indexU][indexV];
     }
     @SuppressWarnings({"unchecked"})
     public Vertex<V>[] endVertices(Edge<E> e) throws IllegalArgumentException {
@@ -117,8 +144,16 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     }
     @SuppressWarnings({"unchecked"})
     public Vertex<V> insertVertex(V element) {
-        VertexImpl<V> vert = new VertexImpl(element, isDirected);
+        VertexImpl<V> vert = new VertexImpl(element);
         vertices.add(vert);
+        int vertexNumber = vertices.size();
+        Edge<E>[][] newMatrix = new Edge[vertexNumber][vertexNumber];
+        for (int i = 0; i < vertexNumber - 1; i++) {
+            for (int j = 0; j < vertexNumber - 1; j++) {
+                newMatrix[i][j] = matrix[i][j];
+            }
+        }
+        matrix = newMatrix;
         return vert;
     }
     @SuppressWarnings({"unchecked"})
@@ -128,32 +163,44 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
             edges.add(edge);
             VertexImpl<V> startVertex = validate(u);
             VertexImpl<V> endVertex = validate(v);
-            startVertex.getOutgoing().put(v, edge);
-            endVertex.getIncoming().put(u, edge);
+            matrix[vertices.indexOf(startVertex)][vertices.indexOf(endVertex)] = edge;
             return edge;
         } else {
             throw new IllegalArgumentException("Edge from u to v already exist");
         }
     }
+    @SuppressWarnings({"unchecked"})
     public void removeVertex(Vertex<V> v) throws IllegalArgumentException {
-        VertexImpl<V> vert= validate(v);
-        for (Edge<E> e : vert.getOutgoing().values())
-            removeEdge(e);
-        for (Edge<E> e : vert.getIncoming().values())
-            removeEdge(e);
+        VertexImpl<V> vert = validate(v);
+        int vertexNumber = vertices.size() - 1;
+        if (vertexNumber >= 2) {
+            int index = vertices.indexOf(vert);
+            Edge<E>[][] newMatrix = new Edge[vertexNumber][vertexNumber];
+            int row = 0;
+            int column = 0;
+            for (int i = 0; i < vertexNumber; i++) {
+                row = i < index ? i : i + 1;
+                for (int j = 0; j < vertexNumber; j++) {
+                    column = j < index ? j : j + 1;
+                    newMatrix[i][j] = matrix[row][column];
+                }
+            }
+            matrix = newMatrix;
+        } else {
+            matrix = null;
+        }
         vertices.remove(vert);
     }
     @SuppressWarnings({"unchecked"})
     public void removeEdge(Edge<E> e) throws IllegalArgumentException {
         EdgeImpl<E> edge = validate(e);
         edges.remove(edge);
-        VertexImpl<V>[] endpoints = (VertexImpl[]) edge.getEndpoints();
-        endpoints[0].getOutgoing().remove(endpoints[1]);
-        endpoints[1].getIncoming().remove(endpoints[0]);
+        Vertex<V>[] endpoints = edge.getEndpoints();
+        matrix[vertices.indexOf(endpoints[0])][vertices.indexOf(endpoints[0])] = null;
     }
 
     public static void main(String[] args) {
-        Graph<String, Integer> undirectGraph = new AdjacencyMapGraph<>(false);
+        Graph<String, Integer> undirectGraph = new AdjacencyMatrixGraph<>(true);
         Vertex<String> vA = undirectGraph.insertVertex("A");
         Vertex<String> vB = undirectGraph.insertVertex("B");
         Vertex<String> vC = undirectGraph.insertVertex("C");
@@ -176,6 +223,6 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
         }
         System.out.println("Vertex num = " + undirectGraph.numVertices());
         System.out.println("Edge num = " + undirectGraph.numEdges());
-        Graph<String, Integer> directGraph = new AdjacencyMapGraph<>(true);
+        Graph<String, Integer> directGraph = new AdjacencyMatrixGraph<>(true);
     }
 }
