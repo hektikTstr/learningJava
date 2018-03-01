@@ -18,6 +18,10 @@
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+.idea/*
+.settings/*
+launch.json
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
@@ -62,6 +66,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+*.class
+*.DS_Store
+*.project
+*.classpath
 
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar

@@ -3,9 +3,6 @@ package com.company.trees;
 import com.company.list.ArrayList;
 import com.company.list.List;
 import com.company.list.Position;
-import javafx.geometry.Pos;
-
-import java.util.Iterator;
 
 public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTree<E> {
     @Override

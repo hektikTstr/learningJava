@@ -98,6 +98,7 @@ public class AdjMtxGraph {
         }
     }
 
+    // 4.7
     public static String[] genBuildOrder(String[] projectNames, String[][] projectDependencies) {
         AdjMtxGraph graph = new AdjMtxGraph(projectNames, projectDependencies);
         String[] ordered = new String[projectNames.length];
